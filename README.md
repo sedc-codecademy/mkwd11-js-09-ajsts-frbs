@@ -1,4 +1,4 @@
-# Welcome to Development with React 🚀
+# Welcome to Full-stack Development with Angular with Firebase 🚀
 
 The goal of this subject is to lay the groundworks of one of the most famous FE library, how to connect our app with a DB and create a full-stack application. On this course the students will be able to learn the following:
 
