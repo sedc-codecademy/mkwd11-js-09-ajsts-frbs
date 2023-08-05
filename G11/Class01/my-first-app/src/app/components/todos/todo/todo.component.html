@@ -1,0 +1,9 @@
+<!-- <h1>{{ titleToParent }}</h1> -->
+<h3>From child component</h3>
+<ul>
+    <li>{{ todosInChild[0] }}</li>
+    <li>{{ todosInChild[1] }}</li>
+    <li>{{ todosInChild[2] }}</li>
+</ul>
+<br><br>
+<button (click)="onTitleSend('Title value sent through EventEmitter')">Sent title to parent</button>

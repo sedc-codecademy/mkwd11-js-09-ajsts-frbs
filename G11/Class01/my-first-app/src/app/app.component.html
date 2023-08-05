@@ -1,0 +1,35 @@
+<!-- <h1>Yes, we have inititialized our first Angular app!</h1> -->
+<h2>String interpolation</h2>
+<app-navigation></app-navigation>
+<h1>{{ title }}</h1>
+<p>The peson's name is {{ person.firstName }}</p>
+<p>The peson's name is {{ person.age }}</p>
+<p>The peson's full name is {{ getFullName('Aneta', 'Stankovska') }}</p>
+<br><br><br>
+
+
+<h2>Property binding</h2>
+<label>Please add your name: </label>
+<input [value]="name">
+<h4 [innerText]="favoriteHobbies"></h4>
+<h4 [style.color]="myColor">This text is styled by the ts file using property binding</h4>
+<img [src]="imageSource">
+<button [disabled]="isDisabled">Change validity</button>
+<br><br><br>
+
+<h2>Event binding</h2>
+<h3>Favorite framework {{ favoriteFramework }}</h3>
+<button (click)="onFrameworkChange()">Change favorite framework</button>
+<br><br>
+<label>Add your username: </label>
+<input (keyup)="onUsernameChange($event)" >
+<p>The username is: {{ username }}</p>
+
+
+<h2>Two-way binding</h2>
+<br><br><br>
+<label>Add your pasword: </label>
+<input [(ngModel)]="password" (keyup)="onPasswordChange($event)" >
+<p>The username is: {{ password }}</p>
+
+<app-todos></app-todos>

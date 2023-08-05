@@ -1,0 +1,15 @@
+<h1>Title from child: {{ titleFromChild }}</h1>
+<!-- <h1>{{ title }}</h1> -->
+<!-- <h3>List of todos: </h3> -->
+<!-- <ul>
+    <li>{{ todosFromParent[0] }}</li>
+    <li>{{ todosFromParent[1] }}</li>
+    <li>{{ todosFromParent[2] }}</li>
+</ul> -->
+
+<app-todo
+    [todosInChild]="todosFromParent"
+    (titleToParent)="onTitleReceive($event)"
+    >
+
+</app-todo>
