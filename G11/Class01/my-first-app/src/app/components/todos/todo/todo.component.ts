@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class TodoComponent {
 
   @Output()
-  titleToParent: EventEmitter<string> = new EventEmitter();
+  titleToParent: EventEmitter<string> = new EventEmitter<string>;
 
 
   @Input()
