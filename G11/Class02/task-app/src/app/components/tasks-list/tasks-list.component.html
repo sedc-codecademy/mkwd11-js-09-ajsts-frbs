@@ -1,0 +1,61 @@
+<!-- # Way 1 -->
+<!-- 
+<section class="container">
+  <div class="taskCard">
+    <h4>Title: {{ tasks_list[0].title }}</h4>
+    <p>Description: {{ tasks_list[0].description }}</p>
+  </div>
+
+  <div class="taskCard">
+    <h4>Title: {{ tasks_list[1].title }}</h4>
+    <p>Description: {{ tasks_list[1].description }}</p>
+  </div>
+
+  <div class="taskCard">
+    <h4>Title: {{ tasks_list[2].title }}</h4>
+    <p>Description: {{ tasks_list[2].description }}</p>
+  </div>
+</section> -->
+
+<!-- Way 2 -->
+<!-- Structural Directives *ngFor & *ngIf -->
+<!-- Attribute directives: ngStyle, ngClass, ngModel -->
+<button
+  (click)="toggleShowTasks()"
+  [innerText]="showTasks ? 'Hide Tasks' : 'Show Tasks'"
+>
+  Hide Tasks
+</button>
+
+<section *ngIf="showTasks" class="container">
+  <!-- [ngStyle]="{ borderColor: task.status === 'DONE' ? 'green' : 'red' }" -->
+  <div
+    [ngStyle]="cardColor(task)"
+    *ngFor="let task of tasks_list; index as i"
+    class="taskCard"
+  >
+    <h4 [ngClass]="task.status === 'DONE' ? 'finishedTask' : 'unfinished'">
+      {{ i + 1 }}: Title: {{ task.title }}
+    </h4>
+    <p>Description: {{ task.description }}</p>
+
+    <div class="operations">
+      <button
+        (click)="startTask(task.id)"
+        *ngIf="task.status === 'NOT_STARTED'"
+      >
+        Start Task
+      </button>
+
+      <button (click)="endTask(task.id)" *ngIf="task.status === 'IN_PROGRESS'">
+        End Task
+      </button>
+
+      <button (click)="emitFinishedTask(task)" *ngIf="task.status === 'DONE'">
+        Emit finished task
+      </button>
+    </div>
+
+    <h3 *ngIf="task.status === 'DONE'">Task is finished</h3>
+  </div>
+</section>

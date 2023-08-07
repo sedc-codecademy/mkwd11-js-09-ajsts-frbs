@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.taskCard {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.finishedTask {
+  background-color: aquamarine;
+}
+
+.unfinished {
+  background-color: coral;
+}

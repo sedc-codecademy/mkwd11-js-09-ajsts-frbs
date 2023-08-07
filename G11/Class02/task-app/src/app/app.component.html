@@ -1,0 +1,23 @@
+<header>
+  <h1>{{ title }}</h1>
+  <h3>{{ subtitle }}</h3>
+</header>
+
+<section>
+  <!-- $event is the argument that has the value that was emitted from the Output prop. -->
+  <app-tasks-list
+    (taskIdToStart)="onStartTask($event)"
+    (taskIdToFinish)="onEndTask($event)"
+    (finishedTaskToEmit)="onFinishedTask($event)"
+    [tasks_list]="tasks"
+  ></app-tasks-list>
+</section>
+
+<br />
+<hr />
+
+<!-- ngFor is just a for of loop -->
+<ul>
+  <!-- for each item in upcoming_tasks a new li element will be created -->
+  <li *ngFor="let item of upcoming_tasks">{{ item }}</li>
+</ul>
