@@ -1,0 +1,56 @@
+<!-- Even though this is a normal html file , we will be able to use specific angular syntax inside -->
+<h1>
+  This is the first starter project in Angular, good luck g12, you will need it!
+</h1>
+<p>Learning angular is easier now than ever</p>
+
+<div>
+  <h1>String interpolation</h1>
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+
+  <h4 class="heading">{{ person.firstName }}</h4>
+  <h4 class="heading">{{ person.lastName }}</h4>
+  <h4 class="heading">{{ person.age }}</h4>
+  <h4 class="heading">{{ person.country }}</h4>
+
+  <p>
+    <strong>{{ printPersonFullName() }}</strong>
+  </p>
+
+  <p>
+    <strong>{{ printFullName("Jane", "Doe") }}</strong>
+  </p>
+
+  <p>
+    <strong>{{ printFullName("Blazho", "Ristovski") }}</strong>
+  </p>
+
+  <p>
+    <strong>{{ printFullName(person.firstName, person.lastName) }}</strong>
+  </p>
+</div>
+
+<div>
+  <h1>Property Binding</h1>
+  <!-- If from left side we have [] brackets then the right side doesn't expect a string but it expects a javascript expression -->
+  <!-- With [] = javascript expression -->
+  <!-- Without [] = string -->
+  <h2 [innerText]="title + ' This is a extension of the title'"></h2>
+  <p [innerText]="description"></p>
+  <img [src]="imgSrc" />
+  <button [disabled]="isBtnDisabled">Don't click me</button>
+</div>
+
+<div>
+  <h1>Event Binding</h1>
+  <button (click)="onBtnClick()">Click me!</button>
+  <h2>{{ currentCourse }}</h2>
+  <button (click)="onChangeCourse()">Change Course</button>
+  <hr />
+  <!-- If we want to get access to the event object in a method we need to use $event when we call the method and then read it in the .ts file -->
+  <input type="text" (keyup)="onInputChange($event, 'test')" />
+  <p>Input value: {{ inputValue }}</p>
+</div>
+
+<app-pets></app-pets>

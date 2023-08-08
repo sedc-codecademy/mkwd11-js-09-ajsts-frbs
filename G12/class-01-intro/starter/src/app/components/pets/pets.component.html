@@ -1,0 +1,12 @@
+<div>
+  <h1>Pets Component</h1>
+
+  <h2>Title from the child: {{ childTitle }}</h2>
+  <!-- If there are @Input propertes in the child , they can be used and populated with data as below -->
+  <!-- 3. Catch the event fired from the child using event binding (outputName) -->
+  <app-pet
+    [titleFromParent]="parentTitle"
+    petType="Cat"
+    (titleOutput)="onTitleRecieve($event)"
+  ></app-pet>
+</div>

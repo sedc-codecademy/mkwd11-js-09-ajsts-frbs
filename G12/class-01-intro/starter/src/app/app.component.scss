@@ -1,0 +1,17 @@
+// By default all .component.scss files work only with the html defined in the matching .component.html file
+
+.heading {
+  background-color: lightgray;
+}
+
+img {
+  width: 200px;
+}
+
+h1 {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 0px;
+  padding-left: 20px;
+  border-radius: 4px;
+}
