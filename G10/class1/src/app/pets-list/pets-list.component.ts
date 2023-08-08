@@ -40,4 +40,10 @@ export class PetsListComponent {
 
     this.inView = newView;
   }
+
+  handlePetRemove(id: number) {
+    console.log('PARENT remove pet', id);
+
+    this.pets = this.pets.filter((pet) => pet.id !== id);
+  }
 }

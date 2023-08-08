@@ -9,10 +9,14 @@
     <div *ngSwitchCase="'list'">
         <h1>Pets List:</h1>
         <ol>
-            <li *ngFor="let pet of pets" [style.backgroundColor]="pet.color">
-                {{pet.name}}<span *ngIf="pet.hasOwner"> *</span>
-            </li>
+            <ng-container *ngFor="let pet of pets">
+                <app-pet [id]="pet.id" [name]="pet.name" [color]="pet.color" [hasOwner]="pet.hasOwner"
+                    (onPetRemove)="handlePetRemove($event)"></app-pet>
+            </ng-container>
         </ol>
+        <p *ngIf="!pets.length">
+            No pets available!
+        </p>
     </div>
     <div *ngSwitchCase="'form'">
         <h1>Form</h1>
