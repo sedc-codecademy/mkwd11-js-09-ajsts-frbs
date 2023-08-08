@@ -1,0 +1,20 @@
+<!-- <h1>This is pets list component</h1> -->
+
+<nav>
+    <button (click)="changeInView('list')">List</button>
+    <button (click)="changeInView('form')">Form</button>
+</nav>
+
+<div [ngSwitch]="inView">
+    <div *ngSwitchCase="'list'">
+        <h1>Pets List:</h1>
+        <ol>
+            <li *ngFor="let pet of pets" [style.backgroundColor]="pet.color">
+                {{pet.name}}<span *ngIf="pet.hasOwner"> *</span>
+            </li>
+        </ol>
+    </div>
+    <div *ngSwitchCase="'form'">
+        <h1>Form</h1>
+    </div>
+</div>
