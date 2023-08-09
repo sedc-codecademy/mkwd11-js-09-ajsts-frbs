@@ -1,0 +1,37 @@
+<header>
+  <h1>Issue Tracker!</h1>
+</header>
+<main>
+  <app-ticket-panel [ticketList]="ticketList"></app-ticket-panel>
+  <div>
+    <button appHoverShadow (click)="generateRandomColor()">
+      RANDOMIZE COLOR!
+    </button>
+    <p
+      appHoverShadow
+      class="random-colored-text"
+      [ngStyle]="{
+        backgroundColor: randomColor,
+        fontWeight: 600,
+        padding: '30px'
+      }"
+    >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis unde
+      itaque, nisi sequi culpa vel reprehenderit nobis beatae tempora ad, atque
+      aspernatur vitae laborum id, illo quidem iure voluptatum repudiandae.
+      Dolores pariatur neque assumenda a debitis voluptates odio esse eligendi
+      rem itaque corrupti, earum reiciendis veritatis illum cupiditate unde
+      tempora ratione quaerat dolorem hic libero quas recusandae et placeat.
+      Commodi. Quibusdam dolores, dolore nesciunt explicabo voluptatum vitae!
+      Magni at facilis vel dolores reprehenderit, id inventore sed eum a
+      deserunt officiis voluptas placeat necessitatibus fuga sunt ratione saepe
+      quidem tempore. Tenetur. Natus, harum tempore? Corporis totam ullam magnam
+      quisquam commodi expedita corrupti. Officia, iste. Aliquam ullam quos
+      maxime cumque. Quo nisi fuga, animi nesciunt laudantium beatae veritatis
+      eos iure nihil labore. Soluta deserunt non harum. Animi est consectetur
+      voluptates deleniti tempore voluptatem, eius suscipit maxime consequuntur
+      qui ex pariatur doloremque doloribus neque repudiandae esse omnis aliquam,
+      ipsa officia inventore cum repellendus!s
+    </p>
+  </div>
+</main>

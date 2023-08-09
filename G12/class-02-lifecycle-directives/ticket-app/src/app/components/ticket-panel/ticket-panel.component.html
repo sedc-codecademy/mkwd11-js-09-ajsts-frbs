@@ -1,0 +1,30 @@
+<div class="panel-controls">
+  <button (click)="filterTicketsByStatus(ticketStatus.NEW)">NEW</button>
+  <button (click)="filterTicketsByStatus(ticketStatus.IN_PROGRESS)">
+    IN PROGRESS
+  </button>
+  <button (click)="filterTicketsByStatus(ticketStatus.DONE)">DONE</button>
+  <button (click)="resetTickets()">RESET</button>
+</div>
+
+<div class="panel-container">
+  <div class="ticket-list">
+    <!-- render out ticket component for every ticket object -->
+    <app-ticket
+      *ngFor="let ticket of filteredTickets"
+      [ticket]="ticket"
+      (ticketOutput)="onTicketSelect($event)"
+    ></app-ticket>
+  </div>
+  <div class="ticket-details" *ngIf="isTicketDetailsShown">
+    <h3>Ticket: {{ selectedTicket.title }}</h3>
+    <div>Description: {{ selectedTicket.description }}</div>
+    <p>
+      <strong>Assignee: {{ selectedTicket.assignee }}</strong>
+    </p>
+    <p>
+      <strong>Status: {{ selectedTicket.status }}</strong>
+    </p>
+    <button (click)="onDetailsHide()">Clear</button>
+  </div>
+</div>

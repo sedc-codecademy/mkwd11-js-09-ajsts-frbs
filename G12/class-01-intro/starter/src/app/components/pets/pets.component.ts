@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pets.component.scss'],
 })
 export class PetsComponent {
+  // This needs to be sent down into the pet ( child ) component
   parentTitle = 'I am coming from the parent';
 
+  // This needs to be updated by the pet ( child ) component
   childTitle = '';
 
   // 4. Use a method in the parent to read the data emitted from the child
