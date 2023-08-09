@@ -73,4 +73,8 @@ export class AppComponent {
   onFinishedTask = (task: Task) => {
     console.log('Task that was finished and emmited is:', task);
   };
+
+  onCreateTask = (task: Task) => {
+    this.tasks.push(task);
+  };
 }

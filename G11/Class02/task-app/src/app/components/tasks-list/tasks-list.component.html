@@ -33,6 +33,7 @@
     [ngStyle]="cardColor(task)"
     *ngFor="let task of tasks_list; index as i"
     class="taskCard"
+    appTaskShadow
   >
     <h4 [ngClass]="task.status === 'DONE' ? 'finishedTask' : 'unfinished'">
       {{ i + 1 }}: Title: {{ task.title }}

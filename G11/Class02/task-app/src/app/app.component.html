@@ -15,6 +15,14 @@
 
 <br />
 <hr />
+<!-- (taskCreated) is the property decorated with @Output -->
+<!-- onCreateTask is the method of the parent that will be triggered
+when the property taskCreated EMITS an event -->
+<!-- $event is actually the value that was emmited with the event -->
+<app-add-task (taskCreated)="onCreateTask($event)"></app-add-task>
+
+<br />
+<hr />
 
 <!-- ngFor is just a for of loop -->
 <ul>
