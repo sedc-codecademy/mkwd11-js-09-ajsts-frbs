@@ -1,0 +1,20 @@
+<h1>Pet Form</h1>
+
+<div>
+    <!-- (keyup)="nameChanged($event)" -->
+    <input type="text" placeholder="Add name..." [(ngModel)]="name">
+    <br />
+    <input type="color" placeholder="Pick color..." [(ngModel)]="color">
+    <br />
+    <input type="number" placeholder="Add age..." min="1" [(ngModel)]="age">
+    <br />
+    <label for="has-owner">Does it have an owner?</label>
+    <input type="checkbox" id="has-owner" [(ngModel)]="hasOwner">
+    <br />
+    <label for="cat">Cat</label>
+    <input type="radio" id="cat" value="cat" name="type" [(ngModel)]="type">
+    <label for="dog">Dog</label>
+    <input type="radio" id="dog" value="dog" name="type" [(ngModel)]="type">
+    <br />
+    <button type="button" (click)="onSubmit()">Submit</button>
+</div>

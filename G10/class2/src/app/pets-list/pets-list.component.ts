@@ -1,38 +1,12 @@
-import { Component } from '@angular/core';
-import { IPet, PetType } from '../interfaces/pet.interface';
+import { Component, Input } from '@angular/core';
+import { IPet } from '../interfaces/pet.interface';
 
 @Component({
   selector: 'app-pets-list',
   templateUrl: './pets-list.component.html',
 })
 export class PetsListComponent {
-  pets: IPet[] = [
-    {
-      id: 1,
-      name: 'Boem',
-      type: PetType.dog,
-      color: 'yellow',
-      age: 5,
-      hasOwner: true,
-    },
-    {
-      id: 2,
-      name: 'Galen',
-      type: PetType.dog,
-      color: 'blue',
-      age: 6,
-      hasOwner: true,
-    },
-    {
-      id: 3,
-      name: 'Sharko',
-      type: PetType.dog,
-      color: 'green',
-      age: 6,
-      hasOwner: false,
-    },
-  ];
-
+  @Input() pets: IPet[] = [];
   inView: string = 'list';
 
   changeInView(newView: string) {
@@ -45,5 +19,11 @@ export class PetsListComponent {
     console.log('PARENT remove pet', id);
 
     this.pets = this.pets.filter((pet) => pet.id !== id);
+  }
+
+  handlePetAdd(pet: IPet) {
+    console.log('PetListComponent', pet);
+    this.pets.push(pet);
+    this.changeInView('list');
   }
 }

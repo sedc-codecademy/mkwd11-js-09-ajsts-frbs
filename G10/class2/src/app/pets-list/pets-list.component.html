@@ -19,6 +19,6 @@
         </p>
     </div>
     <div *ngSwitchCase="'form'">
-        <h1>Form</h1>
+        <app-pet-form (onPetAdded)="handlePetAdd($event)"></app-pet-form>
     </div>
 </div>

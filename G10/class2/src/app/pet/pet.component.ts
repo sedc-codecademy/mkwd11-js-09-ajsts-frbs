@@ -11,7 +11,7 @@ export class PetComponent {
   @Input() name: string = '';
   @Input() color: string = '';
   @Input() hasOwner: boolean = false;
-  @Output() onPetRemove = new EventEmitter<number>();
+  @Output() onPetRemove: EventEmitter<number> = new EventEmitter<number>();
 
   removePet() {
     console.log('Pet to be removed', this.id);
