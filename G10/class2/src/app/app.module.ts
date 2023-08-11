@@ -7,6 +7,7 @@ import { PetComponent } from './pet/pet.component';
 import { PetFormComponent } from './pet-form/pet-form.component';
 import { FormsModule } from '@angular/forms';
 import { PetCountComponent } from './pet-count/pet-count.component';
+import { AppHoverShadowDirective } from './directives/hover-shadow.directive';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { PetCountComponent } from './pet-count/pet-count.component';
     PetComponent,
     PetFormComponent,
     PetCountComponent,
+    AppHoverShadowDirective,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],

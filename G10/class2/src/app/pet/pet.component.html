@@ -1,3 +1,3 @@
-<li [style.backgroundColor]="color">
+<li appHoverShadow [style.backgroundColor]="color" style="margin-bottom: 5px;">
     {{name}}<span *ngIf="hasOwner"> *</span> <button type="button" (click)="removePet()">Delete</button>
 </li>
