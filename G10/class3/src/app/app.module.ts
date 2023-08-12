@@ -9,6 +9,8 @@ import { AverageGradePipe } from './pipes/average-grade.pipe';
 import { GradeColorDirective } from './directives/grade-color.directive';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TopSectionComponent } from './components/top-section/top-section.component';
+import { StudentDetailsComponent } from './components/student-details/student-details.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     GradeColorDirective,
     NavbarComponent,
     NotFoundComponent,
+    TopSectionComponent,
+    StudentDetailsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

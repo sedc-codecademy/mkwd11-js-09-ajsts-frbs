@@ -1,1 +1,18 @@
-<p>dashboard works!</p>
+<div class="wrapper">
+    <div class="row">
+        <div class="column">
+            <app-top-section [students]="developmentStudents" [academyName]="'Development'"></app-top-section>
+        </div>
+        <div class="column">
+            <app-top-section [students]="designStudents" [academyName]="'Design'"></app-top-section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <app-top-section [students]="qaStudents" [academyName]="'Qa'"></app-top-section>
+        </div>
+        <div class="column">
+            <app-top-section [students]="devopsStudents" [academyName]="'DevOps'"></app-top-section>
+        </div>
+    </div>
+</div>
