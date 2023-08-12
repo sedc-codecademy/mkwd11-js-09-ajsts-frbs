@@ -1,4 +1,4 @@
-export enum AcademyType {
+export enum AcademyTypeEnum {
   development = 'Development',
   design = 'Design',
   devops = 'Devops',

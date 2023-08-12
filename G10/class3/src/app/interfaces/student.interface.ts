@@ -1,10 +1,10 @@
-import { AcademyType } from './academy-type.enum';
+import { AcademyTypeEnum } from './academy-type.enum';
 
 export interface Student {
   id: number;
   name: string;
   dateOfBirth: Date;
-  academy: AcademyType;
+  academy: AcademyTypeEnum;
   group: string;
   grades: number[];
 }
