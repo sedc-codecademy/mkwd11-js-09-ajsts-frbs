@@ -19,7 +19,7 @@
             <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
             <td>{{student.academy}}</td>
             <td>{{student.group | uppercase }}</td>
-            <td>{{student.grades}}</td>
+            <td appGradeColor [grade]="student.grades | averageGrade">{{student.grades | averageGrade }}</td>
         </tr>
     </tbody>
 </table>
