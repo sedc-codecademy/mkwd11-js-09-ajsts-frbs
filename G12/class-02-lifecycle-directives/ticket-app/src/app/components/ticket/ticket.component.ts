@@ -17,7 +17,7 @@ export class TicketComponent implements OnInit {
 
   // 1. Create local method in the child that is called when something changes
   onTicketClick() {
-    console.log('local ticket method clicked');
+    console.log('local ticket method called');
     // 2. Emit the data to the parent
     this.ticketOutput.emit(this.ticket);
   }

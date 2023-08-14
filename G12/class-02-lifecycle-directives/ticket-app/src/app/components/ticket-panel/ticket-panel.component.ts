@@ -49,7 +49,7 @@ export class TicketPanelComponent implements OnInit, OnChanges {
   }
 
   onTicketSelect(ticket: Ticket) {
-    console.log('from the parent');
+    console.log('parent ticket method called');
     console.log(ticket);
     this.selectedTicket = ticket;
     this.isTicketDetailsShown = true;

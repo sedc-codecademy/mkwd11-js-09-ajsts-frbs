@@ -1,0 +1,56 @@
+<header>
+  <h1>User App SEDC Gen 11</h1>
+</header>
+
+<main>
+  <div class="container">
+    <div class="form-control">
+      <!-- ngModel binds the value of an input to a property in the class and whenever the property is changed the values changes and vice versa, to use ngModel you have to import FormsModule into the imports property in the app.module.ts file -->
+      <input
+        [(ngModel)]="filterValue"
+        class="input"
+        type="text"
+        placeholder="filter by name..."
+      />
+    </div>
+    <div class="users-container">
+      <div
+        class="user"
+        appHoverShadow
+        *ngFor="let user of users | filter : filterValue"
+      >
+        <div class="user-header">
+          <div class="user-id">{{ user.id }}</div>
+          <div>
+            <!-- "|" is used before adding a pipe in the template, be careful of using "||" because then angualr will read that as the logical OR operator -->
+            <div>{{ user.name | uppercase }}</div>
+            <div>{{ user.email | lowercase }}</div>
+          </div>
+        </div>
+        <div class="user-details">
+          <h3>Personal Details</h3>
+          <p>Phone: {{ user.phone }}</p>
+          <p>Website: {{ user.website }}</p>
+          <p>
+            Birthdate: {{ user.dateOfBirth | date : "fullDate" | uppercase }}
+          </p>
+          <p>
+            Hourly Rate:
+            {{ user.hourlyRate | currency : "EUR" }}
+          </p>
+          <p>Rating: {{ user.rating | number : "1.0-2" }}</p>
+          <p>Rating(%): {{ user.rating | percent : "1.1-3" }}</p>
+          <div class="address-container" appToggleAddress>
+            <h3>Address ⬇️</h3>
+            <div class="address-details hide">
+              <p>Street: {{ user.address.street }}</p>
+              <p>Suite: {{ user.address.suite }}</p>
+              <p>City: {{ user.address.city | shorten : 6 | uppercase }}</p>
+              <p>Zipcode: {{ user.address.zipcode }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

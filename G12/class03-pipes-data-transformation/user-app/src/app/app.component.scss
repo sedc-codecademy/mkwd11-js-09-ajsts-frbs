@@ -1,0 +1,57 @@
+.users-container {
+  display: flex; //TODO Change to grid later
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.user {
+  border: 2px solid #2d3436;
+  padding: 15px;
+  width: 450px;
+  margin: 10px;
+  background-color: #dfe6e9;
+  border-radius: 4px;
+}
+
+.user-header {
+  display: flex;
+  font-size: 22px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #2d3436;
+}
+
+.user-id {
+  font-size: 45px;
+  margin: 0 20px 0 10px;
+}
+
+.form-control {
+  background-color: #dfe6e9;
+  margin: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 290px;
+  border: 2px solid #2d3436;
+
+  .input {
+    font-size: 20px;
+    padding: 5px 0px;
+    text-align: center;
+    width: auto;
+    border: 1.5px solid #636e72;
+  }
+}
+
+.address-container {
+  > h3 {
+    cursor: pointer;
+  }
+  > h3:hover {
+    color: darkgray;
+  }
+}
+
+.hide {
+  display: none;
+}
