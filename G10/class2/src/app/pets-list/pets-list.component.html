@@ -1,0 +1,27 @@
+<!-- <h1>This is pets list component</h1> -->
+
+<nav>
+    <button (click)="changeInView('list')">List</button>
+    <button (click)="changeInView('form')">Form</button>
+</nav>
+
+<div [ngSwitch]="inView">
+    <div *ngSwitchCase="'list'">
+        <h1>Pets List:</h1>
+        <ol>
+            <ng-container *ngFor="let pet of pets">
+                <app-pet [id]="pet.id" [name]="pet.name" [color]="pet.color" [hasOwner]="pet.hasOwner"
+                    (onPetRemove)="handlePetRemove($event)"></app-pet>
+            </ng-container>
+        </ol>
+
+        <app-pet-count [pets]="pets"></app-pet-count>
+
+        <p *ngIf="!pets.length">
+            No pets available!
+        </p>
+    </div>
+    <div *ngSwitchCase="'form'">
+        <app-pet-form (onPetAdded)="handlePetAdd($event)"></app-pet-form>
+    </div>
+</div>
