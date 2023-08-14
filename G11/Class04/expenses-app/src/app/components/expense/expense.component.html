@@ -1,0 +1,6 @@
+<div class="expense">
+  <h2>{{ expense.description }}</h2>
+  <p>{{ expense.category }}</p>
+  <p>Created at: {{ expense.date | date }}</p>
+  <p>Expense cost: {{ expense.amount | currency : expense.currency }}</p>
+</div>
