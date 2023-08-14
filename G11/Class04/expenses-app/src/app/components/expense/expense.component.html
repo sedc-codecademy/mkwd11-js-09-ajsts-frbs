@@ -1,4 +1,4 @@
-<div class="expense">
+<div class="expense" (click)="onSelectExpense(expense)">
   <h2>{{ expense.description }}</h2>
   <p>{{ expense.category }}</p>
   <p>Created at: {{ expense.date | date }}</p>

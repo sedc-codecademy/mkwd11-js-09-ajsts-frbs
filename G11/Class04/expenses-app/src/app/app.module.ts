@@ -7,6 +7,7 @@ import { AddExpenseComponent } from './components/add-expense/add-expense.compon
 import { ExpenseComponent } from './components/expense/expense.component';
 import { LoggerService } from './services/logger.service';
 import { FormsModule } from '@angular/forms';
+import { ExpenseDetailsComponent } from './components/expense-details/expense-details.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
     ListExpensesComponent,
     AddExpenseComponent,
     ExpenseComponent,
+    ExpenseDetailsComponent,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [
