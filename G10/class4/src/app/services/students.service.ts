@@ -369,6 +369,7 @@ export class StudentsService {
         return false;
       }
 
+      // if the student meets all criteria (hasn't failed any check above) it will be returned
       return true;
     });
   }
