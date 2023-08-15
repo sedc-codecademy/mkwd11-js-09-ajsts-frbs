@@ -3,6 +3,17 @@
     {{students | json}}
 </pre> -->
 
+<div class="search-wrapper">
+    <input type="search" id="search" placeholder="Search..." (keyup)="onKeyUp($event)" />
+</div>
+
+<div class="filters-wrapper">
+    <div>
+        <input type="checkbox" id="is-passing" (change)="onIsPassingChange($event)">
+        <label for="is-passing">Is Passing</label>
+    </div>
+</div>
+
 <table>
     <thead>
         <th>#</th>
