@@ -1,0 +1,25 @@
+<!-- ONLY WHILE DEVELOPMENT -->
+<!-- <pre>
+    {{students | json}}
+</pre> -->
+
+<table>
+    <thead>
+        <th>#</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Academy</th>
+        <th>Group</th>
+        <th>Avg Grade</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students">
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
+            <td>{{student.academy}}</td>
+            <td>{{student.group | uppercase }}</td>
+            <td appGradeColor [grade]="student.grades | averageGrade">{{student.grades | averageGrade }}</td>
+        </tr>
+    </tbody>
+</table>
