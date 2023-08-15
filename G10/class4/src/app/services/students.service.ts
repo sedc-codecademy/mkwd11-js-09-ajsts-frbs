@@ -326,12 +326,32 @@ export class StudentsService {
       ) {
         return false;
       }
+
       if (
         searchFilters.isPassing &&
         student.grades.reduce((a, b) => a + b, 0) / student.grades.length < 5
       ) {
         return false;
       }
+
+      if (searchFilters.group && student.group !== searchFilters.group) {
+        return false;
+      }
+
+      if (
+        searchFilters.startDate &&
+        student.dateOfBirth < searchFilters.startDate
+      ) {
+        return false;
+      }
+
+      if (
+        searchFilters.endDate &&
+        student.dateOfBirth > searchFilters.endDate
+      ) {
+        return false;
+      }
+
       return true;
     });
   }

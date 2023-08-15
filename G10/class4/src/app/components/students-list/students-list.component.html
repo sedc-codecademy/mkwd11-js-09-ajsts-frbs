@@ -12,6 +12,22 @@
         <input type="checkbox" id="is-passing" (change)="onIsPassingChange($event)">
         <label for="is-passing">Is Passing</label>
     </div>
+    <div>
+        <select name="group" id="group" (change)="onGroupSelect($event)">
+            <option value="" [selected]="!selectedGroup">All</option>
+            <option *ngFor="let group of groups" [selected]="group === selectedGroup" [value]="group">{{group}}</option>
+        </select>
+    </div>
+    <div>
+        <div>
+            <label for="start-date">From</label>
+            <input type="date" id="start-date" (change)="onStartDateChange($event)" />
+        </div>
+        <div>
+            <label for="end-date">To</label>
+            <input type="date" id="end-date" (change)="onEndDateChange($event)">
+        </div>
+    </div>
 </div>
 
 <table>
