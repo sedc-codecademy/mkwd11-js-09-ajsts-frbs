@@ -8,12 +8,16 @@ import { StudentsService } from '../../services/students.service';
   styleUrls: ['./students-list.component.css'],
 })
 export class StudentsListComponent implements OnInit {
-  students: Student[] = [];
+  students: Student[] = []; // local copy of the list of students, this can be both all students or filtered students depending on if we are searching something or not
+
+  // list of all filters values
   searchTerm: string = '';
   isPassing: boolean = false;
   selectedGroup: string = '';
   startDate: Date | undefined;
   endDate: Date | undefined;
+
+  // hardcoded value of all the groups
   groups: string[] = [
     'G1',
     'G2',
@@ -32,7 +36,7 @@ export class StudentsListComponent implements OnInit {
   constructor(private studentsService: StudentsService) {}
 
   ngOnInit() {
-    this.students = this.studentsService.getStudents();
+    this.students = this.studentsService.getStudents(); // assigning all students on initialization of the component
   }
 
   onKeyUp(e: any) {

@@ -4,7 +4,7 @@ import { AcademyTypeEnum } from '../interfaces/academy-type.enum';
 import { Student } from '../interfaces/student.interface';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', // determines the scope of the service. This is deprecated, in future versions, this will be the default behavior
 })
 export class StudentsService {
   private students: Student[] = [
@@ -313,53 +313,63 @@ export class StudentsService {
   }
 
   searchStudents(searchFilters?: SearchFilters): Student[] {
+    // if this method is called without parameters, we are not searching, return all students
     if (!searchFilters) {
       return this.students;
     }
 
+    // beginning of searching for students
     return this.students.filter((student) => {
+      // 1. are we searching with a search term?
+      // 2. make sure the search term IS INCLUDED in the students name
       if (
         searchFilters.searchTerm &&
         !student.name
           .toLowerCase()
           .includes(searchFilters.searchTerm.toLowerCase())
       ) {
+        // if it's not included, there is no reason to continue checking with other filters, don't return this student
         return false;
       }
 
+      // 1. are we filtering out only students that are passing?
+      // 2. make sure the search term IS HIGHER or EQUAL to 5
       if (
         searchFilters.isPassing &&
         student.grades.reduce((a, b) => a + b, 0) / student.grades.length < 5
       ) {
+        // if it's less than 5, there is no reason to continue checking with other filters, don't return this student
         return false;
       }
 
+      // 1. are we filtering out students by a group?
+      // 2. make sure the student IS IN this group
       if (searchFilters.group && student.group !== searchFilters.group) {
+        // if the student is not in this group, there is no reason to continue checking with other filters, don't return this student
         return false;
       }
 
+      // 1. are we filtering out students by date of birth?
+      // 2. make sure the student IS OLDER THAN the start date
       if (
         searchFilters.startDate &&
         student.dateOfBirth < searchFilters.startDate
       ) {
+        // if it's not older than the start date, there is no reason to continue checking with other filters, don't return this student
         return false;
       }
 
+      // 1. are we filtering out students by date of birth?
+      // 2. make sure the student IS YOUNGER THAN the end date
       if (
         searchFilters.endDate &&
         student.dateOfBirth > searchFilters.endDate
       ) {
+        // if it's not younger than the end date, there is no reason to continue checking with other filters, don't return this student
         return false;
       }
 
       return true;
     });
   }
-
-  // searchStudents2(isPassing: boolean): Student[] {
-  //   return this.students.filter(
-  //     (student) =>
-  //       student.grades.reduce((a, b) => a + b, 0) / student.grades.length > 5
-  //   );
-  // }
 }
