@@ -1,0 +1,12 @@
+<div class="movie-content" *ngIf="selectedMovie else noContent">
+    <h3>{{ selectedMovie.title}}</h3>
+    <p>Director: {{ selectedMovie.director }}</p>
+    <p>Release Date: {{ selectedMovie.releaseDate | date }}</p>
+    <p>Rating: {{ selectedMovie.rating }}</p>
+    <p>Description: {{ selectedMovie.description }}</p>
+    <button routerLink="/movies">Back to movies</button>
+</div>
+
+<ng-template #noContent>
+    <h3>We are sorry, the content is not available.</h3>
+</ng-template>

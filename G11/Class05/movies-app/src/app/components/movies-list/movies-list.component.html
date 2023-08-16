@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="movies" *ngFor="let movie of movies">
+        <div class="movie-card">
+            <h3>{{ movie.title }}</h3>
+            <h4>Director: {{ movie.director }}</h4>
+            <h4>Release Date: {{ movie.releaseDate | date }}</h4>
+            <h4>Rating: {{ movie.rating }}</h4>
+            <button 
+            (click)="onSelectMovie(movie)"
+            [routerLink]="['/movies', movie.id]"
+            >View movie details</button>
+        </div>
+    </div>
+</div>
