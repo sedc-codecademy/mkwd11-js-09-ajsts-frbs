@@ -25,3 +25,36 @@ td, th {
     border: 1px solid #ccc;
     padding: 5px;
 }
+
+.filters-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.filters-wrapper > div {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.filters-wrapper > div > label[for="is-passing"] {
+    padding: 10px 0 10px 5px;
+}
+
+.filters-wrapper input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+}
+
+.filters-wrapper select {
+    width: 300px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px
+}
+
+.filters-wrapper label + input[type="date"] {
+    margin: 0 10px;
+}

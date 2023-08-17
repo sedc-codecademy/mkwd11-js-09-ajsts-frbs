@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../../interfaces/student.interface';
 import { StudentsService } from '../../services/students.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
 
 @Component({
   selector: 'app-students-list',
@@ -33,69 +35,110 @@ export class StudentsListComponent implements OnInit {
     'G12',
   ];
 
-  constructor(private studentsService: StudentsService) {}
+  constructor(
+    private studentsService: StudentsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.students = this.studentsService.getStudents(); // assigning all students on initialization of the component
+    this.searchTerm = this.route.snapshot.queryParams['searchTerm'] || '';
+    this.isPassing = !!this.route.snapshot.queryParams['isPassing'];
+    this.selectedGroup = this.route.snapshot.queryParams['group'] || '';
+    this.startDate = !!this.route.snapshot.queryParams['startDate']
+      ? new Date(this.route.snapshot.queryParams['startDate'])
+      : undefined;
+    this.endDate = !!this.route.snapshot.queryParams['endDate']
+      ? new Date(this.route.snapshot.queryParams['endDate'])
+      : undefined;
+
+    console.log(
+      this.searchTerm,
+      this.isPassing,
+      this.selectedGroup,
+      this.startDate,
+      this.endDate
+    );
+
+    this.students = this.prepareFiltersAndGetStudents();
+  }
+
+  prepareFiltersAndGetStudents(): Student[] {
+    this.setQueryParams();
+
+    return this.studentsService.searchStudents({
+      searchTerm: this.searchTerm,
+      isPassing: this.isPassing,
+      group: this.selectedGroup,
+      startDate: this.startDate,
+      endDate: this.endDate,
+    });
+  }
+
+  setQueryParams() {
+    let queryParams: SearchFilters = {};
+
+    if (this.searchTerm) {
+      queryParams.searchTerm = this.searchTerm;
+    }
+
+    if (this.isPassing) {
+      queryParams.isPassing = this.isPassing;
+    }
+
+    if (this.selectedGroup) {
+      queryParams.group = this.selectedGroup;
+    }
+
+    if (this.startDate) {
+      queryParams.startDate = this.startDate;
+    }
+
+    if (this.endDate) {
+      queryParams.endDate = this.endDate;
+    }
+
+    this.router.navigate([], {
+      queryParams,
+    });
   }
 
   onKeyUp(e: any) {
     // console.log(e.target.value);
     this.searchTerm = e.target.value;
-    this.students = this.studentsService.searchStudents({
-      searchTerm: e.target.value,
-      isPassing: this.isPassing,
-      group: this.selectedGroup,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    });
+
+    if (e.target.value) {
+      this.router.navigate([], {
+        queryParams: {
+          searchTerm: e.target.value,
+        },
+      });
+    } else {
+      this.router.navigate([], {
+        queryParams: {},
+      });
+    }
+
+    this.students = this.prepareFiltersAndGetStudents();
   }
 
   onIsPassingChange(e: any) {
-    // console.log(e.target.checked);
     this.isPassing = e.target.checked;
-    this.students = this.studentsService.searchStudents({
-      isPassing: e.target.checked,
-      searchTerm: this.searchTerm,
-      group: this.selectedGroup,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    });
+    this.students = this.prepareFiltersAndGetStudents();
   }
 
   onGroupSelect(e: any) {
-    // console.log(e.target.value);
     this.selectedGroup = e.target.value;
-    this.students = this.studentsService.searchStudents({
-      group: e.target.value,
-      searchTerm: this.searchTerm,
-      isPassing: this.isPassing,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    });
+    this.students = this.prepareFiltersAndGetStudents();
   }
 
   onStartDateChange(e: any) {
-    // console.log(e.target.value, new Date(e.target.value));
     this.startDate = new Date(e.target.value);
-    this.students = this.studentsService.searchStudents({
-      group: this.selectedGroup,
-      searchTerm: this.searchTerm,
-      isPassing: this.isPassing,
-      startDate: new Date(e.target.value),
-      endDate: this.endDate,
-    });
+    this.students = this.prepareFiltersAndGetStudents();
   }
 
   onEndDateChange(e: any) {
-    // console.log(e.target.value, new Date(e.target.value));
     this.endDate = new Date(e.target.value);
-    this.students = this.studentsService.searchStudents({
-      group: this.selectedGroup,
-      searchTerm: this.searchTerm,
-      isPassing: this.isPassing,
-      startDate: this.startDate,
-      endDate: new Date(e.target.value),
-    });
+    this.students = this.prepareFiltersAndGetStudents();
   }
 }

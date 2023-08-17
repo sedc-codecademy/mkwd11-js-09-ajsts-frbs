@@ -4,12 +4,12 @@
 </pre> -->
 
 <div class="search-wrapper">
-    <input type="search" id="search" placeholder="Search..." (keyup)="onKeyUp($event)" />
+    <input type="search" id="search" [value]="searchTerm" placeholder="Search..." (keyup)="onKeyUp($event)" />
 </div>
 
 <div class="filters-wrapper">
     <div>
-        <input type="checkbox" id="is-passing" (change)="onIsPassingChange($event)">
+        <input type="checkbox" id="is-passing" [checked]="isPassing" (change)="onIsPassingChange($event)">
         <label for="is-passing">Is Passing</label>
     </div>
     <div>
