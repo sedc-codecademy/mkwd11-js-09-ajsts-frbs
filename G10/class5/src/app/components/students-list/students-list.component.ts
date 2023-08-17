@@ -15,6 +15,7 @@ export class StudentsListComponent implements OnInit {
   sortByEnum = SortByEnum;
   sortBy: SortByEnum = SortByEnum.id;
   sortDirection: SortDirectionEnum = SortDirectionEnum.asc;
+  showGrading = new Map(); // {}
 
   // list of all filters values
   searchTerm: string = '';
@@ -205,5 +206,34 @@ export class StudentsListComponent implements OnInit {
   onEndDateChange(e: any) {
     this.endDate = new Date(e.target.value);
     this.students = this.prepareFiltersAndGetStudents();
+  }
+
+  onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
+    console.log(grade, studentId);
+    this.showGrading.set(studentId, false);
+
+    this.studentsService.gradeStudent(studentId, grade);
+
+    this.students = this.prepareFiltersAndGetStudents();
+
+    console.log('OD KOMPONENTATA', this.students);
+
+    // const studentIndex = this.students.findIndex((s) => s.id === studentId);
+    // // this.students[studentIndex].grades.push(grade);
+
+    // this.students[studentIndex] = {
+    //   ...this.students[studentIndex],
+    //   grades: [...this.students[studentIndex].grades, grade],
+    // };
+  }
+
+  onShowGrading(studentId: number) {
+    console.log('onShowGrading', studentId);
+    // {
+    // key === id of the student
+    // value === boolean (is it opened?)
+    // }
+
+    this.showGrading.set(studentId, !this.showGrading.get(studentId));
   }
 }

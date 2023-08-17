@@ -38,6 +38,7 @@
         <th (click)="sortStudents(sortByEnum.academy)">Academy</th>
         <th (click)="sortStudents(sortByEnum.group)">Group</th>
         <th (click)="sortStudents(sortByEnum.avgGrade)">Avg Grade</th>
+        <th>Actions</th>
     </thead>
     <tbody>
         <tr *ngFor="let student of students">
@@ -46,7 +47,18 @@
             <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
             <td>{{student.academy}}</td>
             <td>{{student.group | uppercase }}</td>
-            <td appGradeColor [grade]="student.grades | averageGrade">{{student.grades | averageGrade }}</td>
+            <td appGradeColor [grade]="student.grades | averageGrade">
+                <div>
+                    {{student.grades | averageGrade }}
+                </div>
+                <div *ngIf="showGrading.get(student.id)">
+                    <!-- showGrading[student.id] -->
+                    <app-add-grades [studentId]="student.id" (changedValue)="onChangedGrade($event)"></app-add-grades>
+                </div>
+            </td>
+            <td>
+                <button (click)="onShowGrading(student.id)">Add Grade</button>
+            </td>
         </tr>
     </tbody>
 </table>

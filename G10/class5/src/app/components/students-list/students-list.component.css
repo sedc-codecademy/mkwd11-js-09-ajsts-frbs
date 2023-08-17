@@ -58,3 +58,11 @@ td, th {
 .filters-wrapper label + input[type="date"] {
     margin: 0 10px;
 }
+
+button {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}

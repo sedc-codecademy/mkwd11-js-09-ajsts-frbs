@@ -312,6 +312,17 @@ export class StudentsService {
       .slice(0, 3);
   }
 
+  gradeStudent(studentId: number, grade: number) {
+    const studentIndex = this.students.findIndex((s) => s.id === studentId);
+
+    this.students[studentIndex] = {
+      ...this.students[studentIndex],
+      grades: [...this.students[studentIndex].grades, grade],
+    };
+
+    console.log('OD SERVISOT', this.students);
+  }
+
   searchStudents(searchFilters?: SearchFilters): Student[] {
     // if this method is called without parameters, we are not searching, return all students
     if (!searchFilters) {

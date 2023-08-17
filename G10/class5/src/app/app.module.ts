@@ -12,6 +12,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TopSectionComponent } from './components/top-section/top-section.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentsService } from './services/students.service';
+import { AddGradesComponent } from './components/add-grades/add-grades.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,9 @@ import { StudentsService } from './services/students.service';
     NotFoundComponent,
     TopSectionComponent,
     StudentDetailsComponent,
+    AddGradesComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [StudentsService],
   bootstrap: [AppComponent],
 })
