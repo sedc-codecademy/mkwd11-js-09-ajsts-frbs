@@ -32,12 +32,12 @@
 
 <table>
     <thead>
-        <th>#</th>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Academy</th>
-        <th>Group</th>
-        <th>Avg Grade</th>
+        <th (click)="sortStudents(sortByEnum.id)">#</th>
+        <th (click)="sortStudents(sortByEnum.name)">Name</th>
+        <th (click)="sortStudents(sortByEnum.dateOfBirth)">Date of Birth</th>
+        <th (click)="sortStudents(sortByEnum.academy)">Academy</th>
+        <th (click)="sortStudents(sortByEnum.group)">Group</th>
+        <th (click)="sortStudents(sortByEnum.avgGrade)">Avg Grade</th>
     </thead>
     <tbody>
         <tr *ngFor="let student of students">

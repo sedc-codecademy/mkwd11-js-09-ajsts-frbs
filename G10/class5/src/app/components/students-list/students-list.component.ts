@@ -3,6 +3,7 @@ import { Student } from '../../interfaces/student.interface';
 import { StudentsService } from '../../services/students.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
+import { SortByEnum, SortDirectionEnum } from '../../interfaces/sort.enum';
 
 @Component({
   selector: 'app-students-list',
@@ -11,6 +12,9 @@ import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
 })
 export class StudentsListComponent implements OnInit {
   students: Student[] = []; // local copy of the list of students, this can be both all students or filtered students depending on if we are searching something or not
+  sortByEnum = SortByEnum;
+  sortBy: SortByEnum = SortByEnum.id;
+  sortDirection: SortDirectionEnum = SortDirectionEnum.asc;
 
   // list of all filters values
   searchTerm: string = '';
@@ -52,15 +56,76 @@ export class StudentsListComponent implements OnInit {
       ? new Date(this.route.snapshot.queryParams['endDate'])
       : undefined;
 
-    console.log(
-      this.searchTerm,
-      this.isPassing,
-      this.selectedGroup,
-      this.startDate,
-      this.endDate
-    );
-
     this.students = this.prepareFiltersAndGetStudents();
+  }
+
+  sortStudents(sortBy: SortByEnum) {
+    this.sortBy = sortBy;
+
+    this.students = this.students.sort((a, b) => {
+      // Sorting ascending
+      if (this.sortDirection === SortDirectionEnum.asc) {
+        // Sort by name
+        if (
+          this.sortBy === SortByEnum.name ||
+          this.sortBy === SortByEnum.academy
+        ) {
+          return a[this.sortBy]
+            .toLocaleLowerCase()
+            .localeCompare(b[this.sortBy].toLocaleLowerCase());
+        }
+
+        // Sort by group
+        if (this.sortBy === SortByEnum.group) {
+          return (
+            Number(a.group.replace('G', '')) - Number(b.group.replace('G', ''))
+          );
+        }
+
+        // Sort by avg grade
+        if (this.sortBy === SortByEnum.avgGrade) {
+          return (
+            a.grades.reduce((sum, curr) => sum + curr, 0) -
+            b.grades.reduce((sum, curr) => sum + curr, 0)
+          );
+        }
+
+        return a[this.sortBy] > b[this.sortBy] ? 1 : -1;
+        // Sorting descending
+      } else {
+        // Sort by name
+        if (
+          this.sortBy === SortByEnum.name ||
+          this.sortBy === SortByEnum.academy
+        ) {
+          return b[this.sortBy]
+            .toLocaleLowerCase()
+            .localeCompare(a[this.sortBy].toLocaleLowerCase());
+        }
+
+        // Sort by group
+        if (this.sortBy === SortByEnum.group) {
+          return (
+            Number(b.group.replace('G', '')) - Number(a.group.replace('G', ''))
+          );
+        }
+
+        // Sort by avg grade
+        if (this.sortBy === SortByEnum.avgGrade) {
+          return (
+            b.grades.reduce((sum, curr) => sum + curr, 0) -
+            a.grades.reduce((sum, curr) => sum + curr, 0)
+          );
+        }
+
+        return a[this.sortBy] < b[this.sortBy] ? 1 : -1;
+      }
+    });
+
+    this.sortDirection =
+      this.sortDirection === SortDirectionEnum.asc
+        ? SortDirectionEnum.desc
+        : SortDirectionEnum.asc;
   }
 
   prepareFiltersAndGetStudents(): Student[] {
