@@ -13,7 +13,8 @@ import { TopSectionComponent } from './components/top-section/top-section.compon
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentsService } from './services/students.service';
 import { AddGradesComponent } from './components/add-grades/add-grades.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StudentFormComponent } from './components/student-form/student-form.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { FormsModule } from '@angular/forms';
     TopSectionComponent,
     StudentDetailsComponent,
     AddGradesComponent,
+    StudentFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [StudentsService],
   bootstrap: [AppComponent],
 })

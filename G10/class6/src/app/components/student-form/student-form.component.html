@@ -1,0 +1,32 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" formControlName="name" />
+    </div>
+
+    <div>
+        <label for="group">Group</label>
+        <select name="group" id="group" formControlName="group">
+            <option *ngFor="let group of groups" [value]="group">{{group}}</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="academy">Academy</label>
+        <select name="academy" id="academy" formControlName="academy">
+            <option value="" selected disabled>Select...</option>
+            <option *ngFor="let academy of academies" [value]="academy">
+                {{academy}}
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="date-of-birth">Date of Birth</label>
+        <input type="date" id="date-of-birth" name="dateOfBirth" formControlName="dateOfBirth">
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
