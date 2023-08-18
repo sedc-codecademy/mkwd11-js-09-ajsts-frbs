@@ -2,6 +2,14 @@
     <div>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" formControlName="name" />
+
+        <!-- try to avoid this studentForm.controls['name'], use .get() instead -->
+        <p class="error"
+            *ngIf="studentForm.get('name')?.invalid && (studentForm.get('name')?.touched || studentForm.get('name')?.dirty)">
+            {{ nameHasErrorRequired ? 'Name is required' : ''}}
+            {{ nameHasErrorMinLength ? "Name can't be less than 3 characters" : "" }}
+            {{ nameHasErrorMaxLength ? "Name can't be more than 20 characters" : "" }}
+        </p>
     </div>
 
     <div>
@@ -27,6 +35,6 @@
     </div>
 
     <div>
-        <button type="submit">Submit</button>
+        <button type="submit" [disabled]="studentForm.invalid">Submit</button>
     </div>
 </form>

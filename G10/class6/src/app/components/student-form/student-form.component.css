@@ -32,3 +32,9 @@ button {
     background-color: lawngreen;
     cursor: pointer;
 }
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

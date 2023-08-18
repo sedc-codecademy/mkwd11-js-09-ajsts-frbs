@@ -384,4 +384,8 @@ export class StudentsService {
       return true;
     });
   }
+
+  addStudent(student: Student) {
+    this.students.push(student);
+  }
 }
