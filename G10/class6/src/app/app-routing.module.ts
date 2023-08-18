@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'students', component: StudentsListComponent },
   { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'form', component: StudentFormComponent },
+  { path: 'form/:id', component: StudentFormComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

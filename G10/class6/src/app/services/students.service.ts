@@ -388,4 +388,19 @@ export class StudentsService {
   addStudent(student: Student) {
     this.students.push(student);
   }
+
+  updateStudent(student: Student) {
+    const index = this.students.findIndex((s) => s.id === student.id);
+
+    this.students[index] = {
+      ...this.students[index],
+      ...student,
+    };
+  }
+
+  deleteStudent(studentId: number) {
+    this.students = this.students.filter((s) => s.id !== studentId);
+
+    // console.log('Service', this.students);
+  }
 }

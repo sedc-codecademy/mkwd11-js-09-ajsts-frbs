@@ -234,4 +234,17 @@ export class StudentsListComponent implements OnInit {
     // get is used to fetch the value
     this.showGrading.set(studentId, !this.showGrading.get(studentId));
   }
+
+  onEdit(studentId: number) {
+    this.router.navigate(['/form', studentId]);
+  }
+
+  onDelete(studentId: number) {
+    this.studentsService.deleteStudent(studentId);
+
+    // console.log('Component', this.students); the deleted student is still in this array
+
+    // we need to refetch students to get the fresh copy where the student is actually deleted
+    this.students = this.prepareFiltersAndGetStudents();
+  }
 }
