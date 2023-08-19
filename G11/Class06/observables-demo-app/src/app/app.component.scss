@@ -1,0 +1,21 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  width: fit-content;
+
+  div {
+    padding: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+}
+
+.active {
+  color: red;
+}

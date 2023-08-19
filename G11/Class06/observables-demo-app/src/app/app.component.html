@@ -1,0 +1,23 @@
+<header>
+  <h1>Reactive programming</h1>
+
+  <nav class="nav">
+    <div routerLink="/observables" routerLinkActive="active">Observables</div>
+    <div routerLink="/subjects" routerLinkActive="active">Subjects</div>  
+    <div routerLink="/oparators" routerLinkActive="active">Oparators</div>
+  </nav>
+</header>
+
+
+<router-outlet></router-outlet>
+
+
+<hr />
+<h4>Product to buy: {{product}}</h4>
+
+
+<hr />
+
+<ul>
+  <li *ngFor="let item of products">{{item}}</li>
+</ul>
