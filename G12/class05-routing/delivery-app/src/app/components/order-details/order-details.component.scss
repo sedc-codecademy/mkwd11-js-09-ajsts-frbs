@@ -1,0 +1,27 @@
+section {
+  > div {
+    border-bottom: 3px solid #dddbcb;
+    padding: 10px 0px;
+
+    ol {
+      padding-left: 20px;
+    }
+
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: none;
+    }
+  }
+}
+
+.details-price,
+.details-controls {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  padding-top: 20px;
+}

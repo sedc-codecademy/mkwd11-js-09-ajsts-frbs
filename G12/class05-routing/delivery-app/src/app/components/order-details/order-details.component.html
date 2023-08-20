@@ -1,0 +1,52 @@
+<section class="container">
+  <h2>Order Details</h2>
+  <!-- ng-container is not rendered in the html and is only used as a seperator (identical to <Fragment> in React) -->
+  <ng-container *ngIf="!!selectedOrder">
+    <div>
+      <p [ngStyle]="{ color: '#696D7D' }">
+        {{ selectedOrder.date | date : "mediumDate" }}
+      </p>
+    </div>
+    <div>
+      <h3>
+        <span>ID: {{ selectedOrder.id }}</span>
+        <span class="status" [ngClass]="selectedOrder.status">{{
+          selectedOrder.status | uppercase
+        }}</span>
+      </h3>
+    </div>
+    <div>
+      <h4>Items</h4>
+      <ol>
+        <li *ngFor="let item of selectedOrder.items">{{ item }}</li>
+      </ol>
+    </div>
+    <div>
+      <h4 class="details-price">
+        <span>Total: </span>
+        <span>{{ selectedOrder.amount | currency : "EUR" }}</span>
+      </h4>
+    </div>
+    <div>
+      <div class="details-controls">
+        <div>
+          <p>Delivered by: {{ selectedOrder.deliverer }}</p>
+        </div>
+        <div>
+          <button
+            class="btn completed"
+            (click)="onStatusChange(orderStatus.COMPLETED)"
+          >
+            COMPLETE
+          </button>
+          <button
+            class="btn cancelled"
+            (click)="onStatusChange(orderStatus.CANCELLED)"
+          >
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>
