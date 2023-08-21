@@ -1,0 +1,110 @@
+<form [formGroup]="expenseForm" (ngSubmit)="onFormSubmit()">
+  <div class="basic-data">
+    <div class="form-group">
+      <label for="expense-title">Title</label>
+      <input
+        class="form-control"
+        type="text"
+        id="expense-title"
+        name="expenseTitle"
+        autocomplete="off"
+        formControlName="title"
+      />
+    </div>
+    <p
+      class="help-block"
+      *ngIf="
+        expenseForm.controls.title?.errors?.required &&
+        expenseForm.controls['title'].touched
+      "
+    >
+      This field is required
+    </p>
+    <p
+      class="help-block"
+      *ngIf="expenseForm.controls.title?.errors?.wordIsBlocked"
+    >
+      Please slow down with your french
+    </p>
+    <div class="form-group">
+      <label for="expense-amount">Amount</label>
+      <input
+        class="form-control"
+        type="number"
+        id="expense-amount"
+        name="expenseAmount"
+        autocomplete="off"
+        placeholder="1-500"
+        formControlName="amount"
+      />
+    </div>
+    <!--     "noPropertyAccessFromIndexSignature": false -->
+    <!-- Use this setting if you don't want to use bracked notation when working with controls -->
+    <p
+      class="help-block"
+      *ngIf="
+        expenseForm.controls.amount?.errors?.min ||
+        expenseForm.controls.amount?.errors?.max
+      "
+    >
+      Value must be between 1-500
+    </p>
+    <div class="form-group">
+      <label for="expense-date">Date</label>
+      <input
+        class="form-control"
+        type="date"
+        id="expense-date"
+        name="expenseDate"
+        autocomplete="off"
+        formControlName="date"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="expense-priority">Priority</label>
+    <select
+      formControlName="priority"
+      name="expensePriority"
+      id="expense-priority"
+      class="form-control"
+    >
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="expense-comment">Comment</label>
+    <textarea
+      formControlName="comment"
+      class="form-control"
+      name="expenseComment"
+      id="expense-comment"
+      cols="30"
+      rows="3"
+    ></textarea>
+    <p>
+      {{ expenseForm.controls["comment"].value.length }} /
+      {{ maxCommentLength }}
+    </p>
+  </div>
+
+  <div class="form-group">
+    <div *ngFor="let type of paymentTypes">
+      <input
+        [id]="type + '-radio'"
+        type="radio"
+        name="type"
+        formControlName="type"
+        [value]="type"
+      />
+      <label [htmlFor]="type + '-radio'">{{ type | titlecase }}</label>
+    </div>
+  </div>
+  <button class="btn" [disabled]="expenseForm.invalid" type="submit">
+    Submit
+  </button>
+</form>

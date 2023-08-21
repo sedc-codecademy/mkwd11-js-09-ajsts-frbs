@@ -1,0 +1,99 @@
+<form #expenseForm="ngForm" (ngSubmit)="onFormSubmit()">
+  <div
+    class="basic-data"
+    ngModelGroup="basicDataGroup"
+    #basicDataGroup="ngModelGroup"
+  >
+    <div class="form-group">
+      <label for="expense-title">Title</label>
+      <input
+        #expenseTitle="ngModel"
+        class="form-control"
+        type="text"
+        id="expense-title"
+        ngModel
+        name="expenseTitle"
+        autocomplete="off"
+        required
+      />
+    </div>
+    <p class="help-block" *ngIf="expenseTitle.invalid && expenseTitle.touched">
+      This field is required
+    </p>
+    <div class="form-group">
+      <label for="expense-amount">Amount</label>
+      <input
+        class="form-control"
+        type="number"
+        id="expense-amount"
+        ngModel
+        name="expenseAmount"
+        required
+        min="1"
+        max="500"
+        autocomplete="off"
+        placeholder="1-500"
+      />
+    </div>
+    <div class="form-group">
+      <label for="expense-date">Date</label>
+      <input
+        class="form-control"
+        type="date"
+        id="expense-date"
+        ngModel
+        name="expenseDate"
+        autocomplete="off"
+        required
+      />
+    </div>
+    <p
+      class="help-block"
+      *ngIf="basicDataGroup.invalid && basicDataGroup.touched"
+    >
+      Basic data group fields are required
+    </p>
+  </div>
+  <div class="form-group">
+    <label for="expense-priority">Priority</label>
+    <select
+      ngModel
+      name="expensePriority"
+      id="expense-priority"
+      class="form-control"
+    >
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="expense-comment">Comment</label>
+    <textarea
+      class="form-control"
+      ngModel
+      name="expenseComment"
+      id="expense-comment"
+      cols="30"
+      rows="3"
+      [maxlength]="30"
+      [(ngModel)]="expenseCommentValue"
+    ></textarea>
+    <p>{{ expenseCommentValue.length }} / {{ maxCommentLength }}</p>
+  </div>
+  <div class="form-group">
+    <div *ngFor="let type of paymentTypes">
+      <input
+        [id]="type + '-radio'"
+        type="radio"
+        name="expenseType"
+        ngModel
+        [value]="type"
+      />
+      <label [htmlFor]="type + '-radio'">{{ type | titlecase }}</label>
+    </div>
+  </div>
+  <button class="btn" [disabled]="!expenseForm.valid" type="submit">
+    Submit
+  </button>
+</form>
