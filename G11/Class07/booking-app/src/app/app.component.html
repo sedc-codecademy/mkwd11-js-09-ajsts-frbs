@@ -1,0 +1,33 @@
+<header >
+  <div class="title">
+    <h1>Booking App</h1>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        >Home</a>
+      </li>
+      <li>
+        <a
+        routerLink="/register" 
+        routerLinkActive="active"
+        >
+          Register
+        </a>
+      </li>
+      <li>
+        <a
+        routerLink="/book"
+        routerLinkActive="active"
+        >
+          Book a trip
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<router-outlet></router-outlet>

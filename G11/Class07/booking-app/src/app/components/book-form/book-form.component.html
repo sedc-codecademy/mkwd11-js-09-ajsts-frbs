@@ -1,0 +1,62 @@
+<form #bookingForm="ngForm" (ngSubmit)="onFormSubmit(bookingForm)">
+  <div class="form-group">
+    <label>Destination: </label>
+    <input 
+    type="text" 
+    id="destination" 
+    name="destination"
+    ngModel
+    #destination="ngModel"
+    required
+    />
+    <p *ngIf="!destination.valid && destination.touched" style="color: red;">The destination is requred!</p>
+  </div>
+  <div class="form-group">
+    <label>Email: </label>
+    <input 
+    type="text" 
+    name="email" 
+    id="email"
+    ngModel
+    #email="ngModel"
+    required
+    email />
+  </div>
+  <div class="form-group">
+    <label>Number of passengers: </label>
+    <input 
+    type="number" 
+    name="passengers" 
+    id="passengers"
+    ngModel
+    #pasengers="ngModel"
+    min="1"
+    max="20" />
+  </div>
+  <div class="form-group">
+    <label>Type of accomodation: </label>
+    <select 
+    name="accomodation" 
+    id="accomodation"
+   [ngModel]="defaultAcommodation"
+    #accomodation="ngModel">
+      <option value="hotel">Hotel</option>
+      <option value="appartment">Appartment</option>
+      <option value="guesthose">Guesthouse</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Free Cancellation: </label>
+    <input 
+    type="checkbox"
+    name="freeCancellation"
+    id="freeCancellation"
+    ngModel
+    #freeCancellation="ngModel"
+    >
+  </div>
+  <button 
+  type="submit"
+  [disabled]="!bookingForm.valid"
+  >Submit Form</button>
+</form>
