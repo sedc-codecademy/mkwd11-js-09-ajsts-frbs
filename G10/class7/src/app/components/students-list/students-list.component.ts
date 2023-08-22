@@ -4,6 +4,7 @@ import { StudentsService } from '../../services/students.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
 import { SortByEnum, SortDirectionEnum } from '../../interfaces/sort.enum';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-students-list',
@@ -11,7 +12,7 @@ import { SortByEnum, SortDirectionEnum } from '../../interfaces/sort.enum';
   styleUrls: ['./students-list.component.css'],
 })
 export class StudentsListComponent implements OnInit {
-  students: Student[] = []; // local copy of the list of students, this can be both all students or filtered students depending on if we are searching something or not
+  students$: Observable<Student[]> = new Observable<Student[]>();
   sortByEnum = SortByEnum;
   sortBy: SortByEnum = SortByEnum.id;
   sortDirection: SortDirectionEnum = SortDirectionEnum.asc;
@@ -58,81 +59,72 @@ export class StudentsListComponent implements OnInit {
       ? new Date(this.route.snapshot.queryParams['endDate'])
       : undefined;
 
-    this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.studentsService.students$;
   }
 
   sortStudents(sortBy: SortByEnum) {
-    this.sortBy = sortBy;
-
-    this.students = this.students.sort((a, b) => {
-      // Sorting ascending
-      if (this.sortDirection === SortDirectionEnum.asc) {
-        // Sort by name
-        if (
-          this.sortBy === SortByEnum.name ||
-          this.sortBy === SortByEnum.academy
-        ) {
-          // sorting strings is done with localeCompare
-          return a[this.sortBy]
-            .toLowerCase()
-            .localeCompare(b[this.sortBy].toLowerCase());
-        }
-
-        // Sort by group
-        if (this.sortBy === SortByEnum.group) {
-          // we remove the letter G so that we can compare the numbers
-          return (
-            Number(a.group.replace('G', '')) - Number(b.group.replace('G', ''))
-          );
-        }
-
-        // Sort by avg grade
-        if (this.sortBy === SortByEnum.avgGrade) {
-          // we are comparing the sum of grades
-          return (
-            a.grades.reduce((sum, curr) => sum + curr, 0) -
-            b.grades.reduce((sum, curr) => sum + curr, 0)
-          );
-        }
-
-        return a[this.sortBy] > b[this.sortBy] ? 1 : -1;
-        // Sorting descending
-      } else {
-        // else should be same as the above statement, we just change the places of a and b
-
-        // Sort by name
-        if (
-          this.sortBy === SortByEnum.name ||
-          this.sortBy === SortByEnum.academy
-        ) {
-          return b[this.sortBy]
-            .toLocaleLowerCase()
-            .localeCompare(a[this.sortBy].toLocaleLowerCase());
-        }
-
-        // Sort by group
-        if (this.sortBy === SortByEnum.group) {
-          return (
-            Number(b.group.replace('G', '')) - Number(a.group.replace('G', ''))
-          );
-        }
-
-        // Sort by avg grade
-        if (this.sortBy === SortByEnum.avgGrade) {
-          return (
-            b.grades.reduce((sum, curr) => sum + curr, 0) -
-            a.grades.reduce((sum, curr) => sum + curr, 0)
-          );
-        }
-
-        return a[this.sortBy] < b[this.sortBy] ? 1 : -1;
-      }
-    });
-
-    this.sortDirection =
-      this.sortDirection === SortDirectionEnum.asc
-        ? SortDirectionEnum.desc
-        : SortDirectionEnum.asc;
+    // this.sortBy = sortBy;
+    // this.students = this.students.sort((a, b) => {
+    //   // Sorting ascending
+    //   if (this.sortDirection === SortDirectionEnum.asc) {
+    //     // Sort by name
+    //     if (
+    //       this.sortBy === SortByEnum.name ||
+    //       this.sortBy === SortByEnum.academy
+    //     ) {
+    //       // sorting strings is done with localeCompare
+    //       return a[this.sortBy]
+    //         .toLowerCase()
+    //         .localeCompare(b[this.sortBy].toLowerCase());
+    //     }
+    //     // Sort by group
+    //     if (this.sortBy === SortByEnum.group) {
+    //       // we remove the letter G so that we can compare the numbers
+    //       return (
+    //         Number(a.group.replace('G', '')) - Number(b.group.replace('G', ''))
+    //       );
+    //     }
+    //     // Sort by avg grade
+    //     if (this.sortBy === SortByEnum.avgGrade) {
+    //       // we are comparing the sum of grades
+    //       return (
+    //         a.grades.reduce((sum, curr) => sum + curr, 0) -
+    //         b.grades.reduce((sum, curr) => sum + curr, 0)
+    //       );
+    //     }
+    //     return a[this.sortBy] > b[this.sortBy] ? 1 : -1;
+    //     // Sorting descending
+    //   } else {
+    //     // else should be same as the above statement, we just change the places of a and b
+    //     // Sort by name
+    //     if (
+    //       this.sortBy === SortByEnum.name ||
+    //       this.sortBy === SortByEnum.academy
+    //     ) {
+    //       return b[this.sortBy]
+    //         .toLocaleLowerCase()
+    //         .localeCompare(a[this.sortBy].toLocaleLowerCase());
+    //     }
+    //     // Sort by group
+    //     if (this.sortBy === SortByEnum.group) {
+    //       return (
+    //         Number(b.group.replace('G', '')) - Number(a.group.replace('G', ''))
+    //       );
+    //     }
+    //     // Sort by avg grade
+    //     if (this.sortBy === SortByEnum.avgGrade) {
+    //       return (
+    //         b.grades.reduce((sum, curr) => sum + curr, 0) -
+    //         a.grades.reduce((sum, curr) => sum + curr, 0)
+    //       );
+    //     }
+    //     return a[this.sortBy] < b[this.sortBy] ? 1 : -1;
+    //   }
+    // });
+    // this.sortDirection =
+    //   this.sortDirection === SortDirectionEnum.asc
+    //     ? SortDirectionEnum.desc
+    //     : SortDirectionEnum.asc;
   }
 
   prepareFiltersAndGetStudents(): Student[] {
@@ -180,27 +172,27 @@ export class StudentsListComponent implements OnInit {
 
   onKeyUp(e: any) {
     this.searchTerm = e.target.value;
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 
   onIsPassingChange(e: any) {
     this.isPassing = e.target.checked;
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 
   onGroupSelect(e: any) {
     this.selectedGroup = e.target.value;
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 
   onStartDateChange(e: any) {
     this.startDate = new Date(e.target.value);
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 
   onEndDateChange(e: any) {
     this.endDate = new Date(e.target.value);
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 
   onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
@@ -208,7 +200,7 @@ export class StudentsListComponent implements OnInit {
 
     this.studentsService.gradeStudent(studentId, grade);
 
-    this.students = this.prepareFiltersAndGetStudents(); // refetch students from the service
+    // this.students = this.prepareFiltersAndGetStudents(); // refetch students from the service
 
     // This should not be used while working with Objects and Arrays, as we need to create a new reference so that
     // Angular knows that it needs to rerender (this is valid for properties that are used in the template)
@@ -245,6 +237,6 @@ export class StudentsListComponent implements OnInit {
     // console.log('Component', this.students); the deleted student is still in this array
 
     // we need to refetch students to get the fresh copy where the student is actually deleted
-    this.students = this.prepareFiltersAndGetStudents();
+    // this.students = this.prepareFiltersAndGetStudents();
   }
 }

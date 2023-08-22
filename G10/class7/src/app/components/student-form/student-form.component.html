@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
     <div>
-        <label for="name">Name</label>
+        <label appRequiredField for="name">Name</label>
         <input [ngClass]="{ 'error-border': isNameInvalid }" type="text" id="name" name="name" formControlName="name" />
 
         <!-- try to avoid this studentForm.controls['name'], use .get() instead -->
@@ -12,7 +12,7 @@
     </div>
 
     <div>
-        <label for="group">Group</label>
+        <label appRequiredField for="group">Group</label>
         <select [ngClass]="{ 'error-border': isGroupInvalid }" name="group" id="group" formControlName="group">
             <option *ngFor="let group of groups" [value]="group">{{group}}</option>
         </select>
@@ -23,7 +23,7 @@
     </div>
 
     <div>
-        <label for="academy">Academy</label>
+        <label appRequiredField for="academy">Academy</label>
         <select [ngClass]="{ 'error-border': isAcademyInvalid }" name="academy" id="academy" formControlName="academy">
             <option value="" selected disabled>Select...</option>
             <option *ngFor="let academy of academies" [value]="academy">
@@ -37,7 +37,7 @@
     </div>
 
     <div>
-        <label for="date-of-birth">Date of Birth</label>
+        <label appRequiredField for="date-of-birth">Date of Birth</label>
         <input [ngClass]="{ 'error-border': isDateOfBirthInvalid }" type="date" id="date-of-birth" name="dateOfBirth"
             formControlName="dateOfBirth">
 

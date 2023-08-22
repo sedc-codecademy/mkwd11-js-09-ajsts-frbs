@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   constructor(private studentsService: StudentsService) {}
 
   ngOnInit() {
-    this.students = this.studentsService.getStudents();
+    // this.students = this.studentsService.getStudents();
     this.calculateTopStudents();
   }
 

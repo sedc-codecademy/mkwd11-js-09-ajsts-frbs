@@ -41,7 +41,7 @@
         <th>Actions</th>
     </thead>
     <tbody>
-        <tr *ngFor="let student of students">
+        <tr *ngFor="let student of (students$ | async)">
             <td>{{student.id}}</td>
             <td>{{student.name}}</td>
             <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>

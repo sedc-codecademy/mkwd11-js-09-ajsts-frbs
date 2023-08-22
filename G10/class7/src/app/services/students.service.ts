@@ -2,12 +2,13 @@ import { SearchFilters } from './../interfaces/search-filters.interface';
 import { Injectable } from '@angular/core';
 import { AcademyTypeEnum } from '../interfaces/academy-type.enum';
 import { Student } from '../interfaces/student.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // determines the scope of the service. This is deprecated, in future versions, this will be the default behavior
 })
 export class StudentsService {
-  private students: Student[] = [
+  private studentsDefaultData: Student[] = [
     {
       id: 1,
       name: 'Aleksandar Ivanov',
@@ -291,116 +292,111 @@ export class StudentsService {
     },
   ];
 
-  getStudents(): Student[] {
-    return this.students;
-  }
+  // Subject -- doesn't keep data
+  // BehaviorSubject -- keeps last value
 
-  getStudentById(id: number): Student | undefined {
-    return this.students.find((s) => s.id === id);
+  private studentData: BehaviorSubject<Student[]> = new BehaviorSubject<
+    Student[]
+  >(this.studentsDefaultData);
+
+  students$: Observable<Student[]> = this.studentData.asObservable();
+
+  private updateStudentData(students: Student[]): void {
+    this.studentData.next(students);
   }
 
   getTopThreeStudentsPerAcademy(academy: AcademyTypeEnum): Student[] {
-    return this.students
-      .filter((student) => student.academy === academy)
-      .sort((a, b) => {
-        const aAverageGrade =
-          a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
-        const bAverageGrade =
-          b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
-        return bAverageGrade - aAverageGrade;
-      })
-      .slice(0, 3);
+    return [];
+    // return this.students
+    //   .filter((student) => student.academy === academy)
+    //   .sort((a, b) => {
+    //     const aAverageGrade =
+    //       a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
+    //     const bAverageGrade =
+    //       b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
+    //     return bAverageGrade - aAverageGrade;
+    //   })
+    //   .slice(0, 3);
   }
 
   gradeStudent(studentId: number, grade: number) {
-    const studentIndex = this.students.findIndex((s) => s.id === studentId);
-
-    this.students[studentIndex] = {
-      ...this.students[studentIndex],
-      grades: [...this.students[studentIndex].grades, grade],
-    };
-
-    console.log('OD SERVISOT', this.students);
+    // const studentIndex = this.students.findIndex((s) => s.id === studentId);
+    // this.students[studentIndex] = {
+    //   ...this.students[studentIndex],
+    //   grades: [...this.students[studentIndex].grades, grade],
+    // };
   }
 
   searchStudents(searchFilters?: SearchFilters): Student[] {
-    // if this method is called without parameters, we are not searching, return all students
-    if (!searchFilters) {
-      return this.students;
-    }
-
-    // beginning of searching for students
-    return this.students.filter((student) => {
-      // 1. are we searching with a search term?
-      // 2. make sure the search term IS INCLUDED in the students name
-      if (
-        searchFilters.searchTerm &&
-        !student.name
-          .toLowerCase()
-          .includes(searchFilters.searchTerm.toLowerCase())
-      ) {
-        // if it's not included, there is no reason to continue checking with other filters, don't return this student
-        return false;
-      }
-
-      // 1. are we filtering out only students that are passing?
-      // 2. make sure the search term IS HIGHER or EQUAL to 5
-      if (
-        searchFilters.isPassing &&
-        student.grades.reduce((a, b) => a + b, 0) / student.grades.length < 5
-      ) {
-        // if it's less than 5, there is no reason to continue checking with other filters, don't return this student
-        return false;
-      }
-
-      // 1. are we filtering out students by a group?
-      // 2. make sure the student IS IN this group
-      if (searchFilters.group && student.group !== searchFilters.group) {
-        // if the student is not in this group, there is no reason to continue checking with other filters, don't return this student
-        return false;
-      }
-
-      // 1. are we filtering out students by date of birth?
-      // 2. make sure the student IS OLDER THAN the start date
-      if (
-        searchFilters.startDate &&
-        student.dateOfBirth < searchFilters.startDate
-      ) {
-        // if it's not older than the start date, there is no reason to continue checking with other filters, don't return this student
-        return false;
-      }
-
-      // 1. are we filtering out students by date of birth?
-      // 2. make sure the student IS YOUNGER THAN the end date
-      if (
-        searchFilters.endDate &&
-        student.dateOfBirth > searchFilters.endDate
-      ) {
-        // if it's not younger than the end date, there is no reason to continue checking with other filters, don't return this student
-        return false;
-      }
-
-      // if the student meets all criteria (hasn't failed any check above) it will be returned
-      return true;
-    });
+    return [];
+    // // if this method is called without parameters, we are not searching, return all students
+    // if (!searchFilters) {
+    //   return this.students;
+    // }
+    // // beginning of searching for students
+    // return this.students.filter((student) => {
+    //   // 1. are we searching with a search term?
+    //   // 2. make sure the search term IS INCLUDED in the students name
+    //   if (
+    //     searchFilters.searchTerm &&
+    //     !student.name
+    //       .toLowerCase()
+    //       .includes(searchFilters.searchTerm.toLowerCase())
+    //   ) {
+    //     // if it's not included, there is no reason to continue checking with other filters, don't return this student
+    //     return false;
+    //   }
+    //   // 1. are we filtering out only students that are passing?
+    //   // 2. make sure the search term IS HIGHER or EQUAL to 5
+    //   if (
+    //     searchFilters.isPassing &&
+    //     student.grades.reduce((a, b) => a + b, 0) / student.grades.length < 5
+    //   ) {
+    //     // if it's less than 5, there is no reason to continue checking with other filters, don't return this student
+    //     return false;
+    //   }
+    //   // 1. are we filtering out students by a group?
+    //   // 2. make sure the student IS IN this group
+    //   if (searchFilters.group && student.group !== searchFilters.group) {
+    //     // if the student is not in this group, there is no reason to continue checking with other filters, don't return this student
+    //     return false;
+    //   }
+    //   // 1. are we filtering out students by date of birth?
+    //   // 2. make sure the student IS OLDER THAN the start date
+    //   if (
+    //     searchFilters.startDate &&
+    //     student.dateOfBirth < searchFilters.startDate
+    //   ) {
+    //     // if it's not older than the start date, there is no reason to continue checking with other filters, don't return this student
+    //     return false;
+    //   }
+    //   // 1. are we filtering out students by date of birth?
+    //   // 2. make sure the student IS YOUNGER THAN the end date
+    //   if (
+    //     searchFilters.endDate &&
+    //     student.dateOfBirth > searchFilters.endDate
+    //   ) {
+    //     // if it's not younger than the end date, there is no reason to continue checking with other filters, don't return this student
+    //     return false;
+    //   }
+    //   // if the student meets all criteria (hasn't failed any check above) it will be returned
+    //   return true;
+    // });
   }
 
   addStudent(student: Student) {
-    this.students.push(student);
+    // this.students.push(student);
   }
 
   updateStudent(student: Student) {
-    const index = this.students.findIndex((s) => s.id === student.id);
-
-    this.students[index] = {
-      ...this.students[index],
-      ...student,
-    };
+    // const index = this.students.findIndex((s) => s.id === student.id);
+    // this.students[index] = {
+    //   ...this.students[index],
+    //   ...student,
+    // };
   }
 
   deleteStudent(studentId: number) {
-    this.students = this.students.filter((s) => s.id !== studentId);
-
-    // console.log('Service', this.students);
+    // this.students = this.students.filter((s) => s.id !== studentId);
   }
 }

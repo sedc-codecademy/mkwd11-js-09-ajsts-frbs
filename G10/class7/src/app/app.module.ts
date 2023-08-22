@@ -15,6 +15,7 @@ import { StudentsService } from './services/students.service';
 import { AddGradesComponent } from './components/add-grades/add-grades.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StudentFormComponent } from './components/student-form/student-form.component';
+import { RequiredFieldDirective } from './directives/required-field.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { StudentFormComponent } from './components/student-form/student-form.com
     StudentDetailsComponent,
     AddGradesComponent,
     StudentFormComponent,
+    RequiredFieldDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [StudentsService],
