@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AcademyTypeEnum } from 'src/app/interfaces/academy-type.enum';
 import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-student-form',
@@ -24,7 +25,10 @@ export class StudentFormComponent implements OnInit {
     ),
     group: new FormControl<string>('', Validators.required),
     academy: new FormControl<string>('', Validators.required),
-    dateOfBirth: new FormControl<string>('', Validators.required),
+    dateOfBirth: new FormControl<string>(
+      formatDate(new Date().toISOString(), 'yyyy-MM-dd', 'en'),
+      Validators.required
+    ),
     grades: new FormControl<number[]>([]), // a form control that is not connected to the template
   });
   academies = Object.values(AcademyTypeEnum);
@@ -56,6 +60,38 @@ export class StudentFormComponent implements OnInit {
     return this.studentForm.get('name')?.hasError('maxlength');
   }
 
+  get isNameInvalid() {
+    return (
+      this.studentForm.get('name')?.invalid &&
+      (this.studentForm.get('name')?.touched ||
+        this.studentForm.get('name')?.dirty)
+    );
+  }
+
+  get isGroupInvalid() {
+    return (
+      this.studentForm.get('group')?.invalid &&
+      (this.studentForm.get('group')?.touched ||
+        this.studentForm.get('group')?.dirty)
+    );
+  }
+
+  get isAcademyInvalid() {
+    return (
+      this.studentForm.get('academy')?.invalid &&
+      (this.studentForm.get('academy')?.touched ||
+        this.studentForm.get('academy')?.dirty)
+    );
+  }
+
+  get isDateOfBirthInvalid() {
+    return (
+      this.studentForm.get('dateOfBirth')?.invalid &&
+      (this.studentForm.get('dateOfBirth')?.touched ||
+        this.studentForm.get('dateOfBirth')?.dirty)
+    );
+  }
+
   constructor(
     private studentsService: StudentsService,
     private router: Router,
@@ -64,20 +100,24 @@ export class StudentFormComponent implements OnInit {
 
   ngOnInit() {
     const studentId = this.route.snapshot.params['id'];
-    // console.log(studentId);
-    this.isEditing = !!studentId;
 
     if (studentId) {
       const student = this.studentsService.getStudentById(Number(studentId));
 
-      // console.log(student);
-
       if (student) {
+        this.isEditing = true;
+
         const studentValue = {
           ...student,
-          dateOfBirth: new Date(student.dateOfBirth).toISOString(),
+          dateOfBirth: formatDate(
+            new Date(student.dateOfBirth).toISOString(),
+            'yyyy-MM-dd',
+            'en'
+          ),
         };
         this.studentForm.patchValue(studentValue); // update form values
+        // setValue = MUST update all properties of the group object
+        // patchValue = can update any value of the form group object
 
         // this.studentForm.get('name')?.patchValue('') this can be used to patch a single control
         // console.log(this.studentForm.value);

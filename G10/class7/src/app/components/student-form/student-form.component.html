@@ -1,11 +1,10 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
     <div>
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" formControlName="name" />
+        <input [ngClass]="{ 'error-border': isNameInvalid }" type="text" id="name" name="name" formControlName="name" />
 
         <!-- try to avoid this studentForm.controls['name'], use .get() instead -->
-        <p class="error"
-            *ngIf="studentForm.get('name')?.invalid && (studentForm.get('name')?.touched || studentForm.get('name')?.dirty)">
+        <p class="error" *ngIf="isNameInvalid">
             {{ nameHasErrorRequired ? 'Name is required' : ''}}
             {{ nameHasErrorMinLength ? "Name can't be less than 3 characters" : "" }}
             {{ nameHasErrorMaxLength ? "Name can't be more than 20 characters" : "" }}
@@ -14,24 +13,37 @@
 
     <div>
         <label for="group">Group</label>
-        <select name="group" id="group" formControlName="group">
+        <select [ngClass]="{ 'error-border': isGroupInvalid }" name="group" id="group" formControlName="group">
             <option *ngFor="let group of groups" [value]="group">{{group}}</option>
         </select>
+
+        <p class="error" *ngIf="isGroupInvalid">
+            Group is required
+        </p>
     </div>
 
     <div>
         <label for="academy">Academy</label>
-        <select name="academy" id="academy" formControlName="academy">
+        <select [ngClass]="{ 'error-border': isAcademyInvalid }" name="academy" id="academy" formControlName="academy">
             <option value="" selected disabled>Select...</option>
             <option *ngFor="let academy of academies" [value]="academy">
                 {{academy}}
             </option>
         </select>
+
+        <p class="error" *ngIf="isAcademyInvalid">
+            Academy is required
+        </p>
     </div>
 
     <div>
         <label for="date-of-birth">Date of Birth</label>
-        <input type="date" id="date-of-birth" name="dateOfBirth" formControlName="dateOfBirth">
+        <input [ngClass]="{ 'error-border': isDateOfBirthInvalid }" type="date" id="date-of-birth" name="dateOfBirth"
+            formControlName="dateOfBirth">
+
+        <p class="error" *ngIf="isDateOfBirthInvalid">
+            Date of Birth is required
+        </p>
     </div>
 
     <div>
