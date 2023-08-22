@@ -60,6 +60,8 @@ export class StudentsListComponent implements OnInit {
       : undefined;
 
     this.students$ = this.studentsService.students$;
+    // we are assigning the value from the students (from the service) observable to the local component observable
+    // when using it like this without a subscribe attached, we must use the async pipe in the template
   }
 
   sortStudents(sortBy: SortByEnum) {

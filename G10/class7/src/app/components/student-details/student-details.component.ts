@@ -21,34 +21,24 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // let id: string = this.route.snapshot.params['id'];
-
-    // let id: number = 0;
-
+    // Never use subscribe inside a subscribe!!!
     // this.route.params.subscribe((params) => {
-    //   console.log(params);
-
-    //   id = Number(params['id']);
-
+    //   let id = Number(params['id']);
     //   this.studentsService.students$.subscribe((students) => {
-    //     // console.log(students);
-
     //     const student = students.find((s) => s.id === id);
-    //     console.log(student);
     //   });
     // });
 
     this.subscription = this.route.params
       .pipe(
-        map((params) => Number(params['id'])),
+        map((params) => Number(params['id'])), // returns a parsed ID
         mergeMap((id) =>
           this.studentsService.students$.pipe(
-            map((students) => students.find((s) => s.id === id))
+            map((students) => students.find((s) => s.id === id)) // returns a single student
           )
         )
-      )
+      ) // merges the params stream with the students stream and provides a single student object
       .subscribe((student) => {
-        console.log(student);
         this.student = student;
       });
   }
@@ -57,6 +47,7 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
     this.location.back(); // mimics the browser back button behavior
   }
 
+  // Don't forget to unsubscribe ALWAYS
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
