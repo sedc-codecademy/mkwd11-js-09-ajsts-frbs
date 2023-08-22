@@ -1,0 +1,8 @@
+<h4>
+    Top 3 Students in {{academyName}}
+</h4>
+<ul>
+    <li *ngFor="let student of students">
+        <a [routerLink]="['/students', student.id]"> {{student.name}} - {{student.grades | averageGrade}}</a>
+    </li>
+</ul>

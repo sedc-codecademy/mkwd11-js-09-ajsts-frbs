@@ -1,0 +1,66 @@
+<!-- ONLY WHILE DEVELOPMENT -->
+<!-- <pre>
+    {{students | json}}
+</pre> -->
+
+<div class="search-wrapper">
+    <input type="search" id="search" [value]="searchTerm" placeholder="Search..." (keyup)="onKeyUp($event)" />
+</div>
+
+<div class="filters-wrapper">
+    <div>
+        <input type="checkbox" id="is-passing" [checked]="isPassing" (change)="onIsPassingChange($event)">
+        <label for="is-passing">Is Passing</label>
+    </div>
+    <div>
+        <select name="group" id="group" (change)="onGroupSelect($event)">
+            <option value="" [selected]="!selectedGroup">All</option>
+            <option *ngFor="let group of groups" [selected]="group === selectedGroup" [value]="group">{{group}}</option>
+        </select>
+    </div>
+    <div>
+        <div>
+            <label for="start-date">From</label>
+            <input type="date" id="start-date" (change)="onStartDateChange($event)" />
+        </div>
+        <div>
+            <label for="end-date">To</label>
+            <input type="date" id="end-date" (change)="onEndDateChange($event)">
+        </div>
+    </div>
+</div>
+
+<table>
+    <thead>
+        <th (click)="sortStudents(sortByEnum.id)">#</th>
+        <th (click)="sortStudents(sortByEnum.name)">Name</th>
+        <th (click)="sortStudents(sortByEnum.dateOfBirth)">Date of Birth</th>
+        <th (click)="sortStudents(sortByEnum.academy)">Academy</th>
+        <th (click)="sortStudents(sortByEnum.group)">Group</th>
+        <th (click)="sortStudents(sortByEnum.avgGrade)">Avg Grade</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students">
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
+            <td>{{student.academy}}</td>
+            <td>{{student.group | uppercase }}</td>
+            <td appGradeColor [grade]="student.grades | averageGrade">
+                <div>
+                    {{student.grades | averageGrade }}
+                </div>
+                <div *ngIf="showGrading.get(student.id)">
+                    <!-- showGrading[student.id] -->
+                    <app-add-grades [studentId]="student.id" (changedValue)="onChangedGrade($event)"></app-add-grades>
+                </div>
+            </td>
+            <td>
+                <button (click)="onShowGrading(student.id)">Add Grade</button>
+                <button (click)="onEdit(student.id)">Edit</button>
+                <button (click)="onDelete(student.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
