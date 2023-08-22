@@ -386,6 +386,10 @@ export class StudentsService {
 
   addStudent(student: Student) {
     // this.students.push(student);
+    const students = this.studentData.getValue();
+    students.push(student);
+
+    this.updateStudentData(students);
   }
 
   updateStudent(student: Student) {
@@ -397,6 +401,13 @@ export class StudentsService {
   }
 
   deleteStudent(studentId: number) {
-    // this.students = this.students.filter((s) => s.id !== studentId);
+    let students: Student[] = this.studentData.getValue();
+
+    console.log('before delete', students);
+    students = students.filter((s) => s.id !== studentId);
+
+    console.log('after filter', students);
+
+    this.updateStudentData(students);
   }
 }

@@ -43,7 +43,8 @@
     <tbody>
         <tr *ngFor="let student of (students$ | async)">
             <td>{{student.id}}</td>
-            <td>{{student.name}}</td>
+            <!-- [routerLink]="['/students', student.id]" -->
+            <td><a [routerLink]="[student.id]">{{student.name}}</a></td>
             <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
             <td>{{student.academy}}</td>
             <td>{{student.group | uppercase }}</td>
