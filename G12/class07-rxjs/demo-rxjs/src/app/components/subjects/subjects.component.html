@@ -1,0 +1,27 @@
+<section class="container">
+  <h1>Subject</h1>
+  <div>
+    <div class="list-container">
+      <h2>Subject List</h2>
+      <ul>
+        <li *ngFor="let name of nameArray">{{ name | uppercase }}</li>
+      </ul>
+      <div class="form-group">
+        <input class="form-input" type="text" [formControl]="nameInput" />
+        <button (click)="onAddName()">Add Name</button>
+      </div>
+    </div>
+    <div class="list-container">
+      <h2>Behavior Subject List</h2>
+      <ol class="fruit-list" *ngIf="fruitsSubject$ | async as fruitArray">
+        <li *ngFor="let fruit of fruitArray">
+          {{ fruit | uppercase }}
+        </li>
+      </ol>
+      <div class="form-group">
+        <input type="text" class="form-input" [formControl]="fruitInput" />
+        <button (click)="onAddFruit()">Add Fruit</button>
+      </div>
+    </div>
+  </div>
+</section>
