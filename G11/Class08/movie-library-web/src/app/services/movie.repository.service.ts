@@ -17,4 +17,8 @@ export class MovieRepositoryService {
   createMovie = (movieRequestBody: MovieRequestBody) => {
     return this.httpClient.post(this.URL, movieRequestBody);
   };
+
+  deleteMovie = (movieId: string) => {
+    return this.httpClient.delete(`${this.URL}/${movieId}`);
+  };
 }

@@ -1,1 +1,13 @@
-<p>movie-details works!</p>
+<main>
+  <h2>Movie details</h2>
+
+  <div>
+    <h3>{{selectedMovie.name}}</h3>
+    <img src="{{selectedMovie.imageUrl}}" alt="{{selectedMovie.name}}" height="200"/>
+  </div>
+
+  <div>
+    <button (click)="deleteMovie()">Delete</button>
+    <button>Edit</button>
+  </div>
+</main>

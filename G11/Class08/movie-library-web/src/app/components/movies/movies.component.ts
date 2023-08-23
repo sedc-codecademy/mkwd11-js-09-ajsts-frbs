@@ -11,6 +11,7 @@ export class MoviesComponent implements OnInit {
   constructor(private readonly movieService: MovieService) {}
 
   movies: Movie[];
+  isFetching: boolean;
 
   ngOnInit(): void {
     this.movieService.getMovies();
@@ -19,6 +20,10 @@ export class MoviesComponent implements OnInit {
       next: (moviesResponse) => {
         this.movies = moviesResponse;
       },
+    });
+
+    this.movieService.isFetching.subscribe((data) => {
+      this.isFetching = data;
     });
   }
 }
