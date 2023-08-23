@@ -25,17 +25,19 @@ export class ReactiveFormComponent implements OnInit {
 
   initForm() {
     this.expenseForm = new FormGroup({
-      title: new FormControl('', [
-        Validators.required,
-        // Pass refrences here to functions, never call them
-        this.blockedWordsValidator,
-      ]),
-      amount: new FormControl(null, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(500),
-      ]),
-      date: new FormControl('2023-08-21', [Validators.required]),
+      basicData: new FormGroup({
+        title: new FormControl('', [
+          Validators.required,
+          // Pass refrences here to functions, never call them
+          this.blockedWordsValidator,
+        ]),
+        amount: new FormControl(null, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(500),
+        ]),
+        date: new FormControl('2023-08-21', Validators.required),
+      }),
       priority: new FormControl('medium'),
       comment: new FormControl('', [Validators.maxLength(30)]),
       type: new FormControl('cash'),

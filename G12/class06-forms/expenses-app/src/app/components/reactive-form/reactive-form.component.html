@@ -1,5 +1,5 @@
 <form [formGroup]="expenseForm" (ngSubmit)="onFormSubmit()">
-  <div class="basic-data">
+  <div class="basic-data" formGroupName="basicData">
     <div class="form-group">
       <label for="expense-title">Title</label>
       <input
@@ -11,18 +11,20 @@
         formControlName="title"
       />
     </div>
+    <!-- If the control is not nested you can use [.] notation -->
+    <!-- expenseForm.controls.title?.errors.required -->
     <p
       class="help-block"
       *ngIf="
-        expenseForm.controls.title?.errors?.required &&
-        expenseForm.controls['title'].touched
+        expenseForm.get('basicData.title').errors?.required &&
+        expenseForm.get('basicData.title').touched
       "
     >
       This field is required
     </p>
     <p
       class="help-block"
-      *ngIf="expenseForm.controls.title?.errors?.wordIsBlocked"
+      *ngIf="expenseForm.get('basicData.title').errors?.wordIsBlocked"
     >
       Please slow down with your french
     </p>
@@ -43,8 +45,8 @@
     <p
       class="help-block"
       *ngIf="
-        expenseForm.controls.amount?.errors?.min ||
-        expenseForm.controls.amount?.errors?.max
+        expenseForm.get('basicData.amount').errors?.min ||
+        expenseForm.get('basicData.amount').errors?.max
       "
     >
       Value must be between 1-500
