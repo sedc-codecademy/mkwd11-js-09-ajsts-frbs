@@ -1,1 +1,24 @@
-<p>add-movie works!</p>
+<main>
+  <h2>Add new movie to the library:</h2>
+
+  <form [formGroup]="createMovieForm" (ngSubmit)="onSubmit()">
+
+    <div>
+
+      <label for="movieName">Movie Name</label>
+      <input type="text" name="movieName" id="movieName" formControlName="movieName">
+
+      <label for="movieDirector">Movie Director</label>
+      <input type="text" name="movieDirector" id="movieDirector" formControlName="movieDirector" >
+
+      <label for="movieGenre">Movie Genre</label>
+      <input type="text" name="movieGenre" id="movieGenre" formControlName="movieGenre">
+
+      <label for="imageUrl">Movie Image url</label>
+      <input type="text" name="imageUrl" id="imageUrl" formControlName="movieCoverImageUrl">
+
+    </div>
+
+    <button type="submit">Create movie</button>
+  </form>
+</main>

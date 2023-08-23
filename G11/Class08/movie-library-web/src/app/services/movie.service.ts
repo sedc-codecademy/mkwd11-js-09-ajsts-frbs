@@ -1,23 +1,39 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Movie } from '../interfaces/movie.interface';
+import { Movie, MovieRequestBody } from '../interface/movie.interface';
+import { MovieRepositoryService } from './movie.repository.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieService {
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly moviesRepository: MovieRepositoryService) {}
 
   moviesSubject = new BehaviorSubject<Movie[]>([]);
+  selectedMovie = new BehaviorSubject<Movie>({} as Movie);
 
   getMovies = () => {
-    this.httpClient
-      .get<Movie[]>('http://localhost:3000/movies')
-      .subscribe((data) => {
-        console.log('Result from requst is: ', data);
+    this.moviesRepository.getMovies().subscribe({
+      next: (data) => this.moviesSubject.next(data),
+      error: (error) => {
+        console.log('Error happened:', error);
+        // Logic for handling errors
+      },
+    });
+  };
 
-        this.moviesSubject.next(data);
-      });
+  createMovie = (movieRequestBody: MovieRequestBody) => {
+    this.moviesRepository.createMovie(movieRequestBody).subscribe({
+      next: (responseData) => {
+        console.log('Response data: ', responseData);
+      },
+      error: (error) => {
+        console.error('Error happened: ', error);
+      },
+    });
+  };
+
+  setSelectedMovie = (movie: Movie) => {
+    this.selectedMovie.next(movie);
   };
 }

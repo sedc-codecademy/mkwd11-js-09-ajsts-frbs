@@ -5,3 +5,10 @@ export interface Movie {
   name: string;
   imageUrl: string;
 }
+
+export interface MovieRequestBody {
+  name: string;
+  genre: string;
+  director: string;
+  imageUrl: string;
+}
