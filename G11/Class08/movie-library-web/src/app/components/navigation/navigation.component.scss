@@ -1,0 +1,36 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin-right: 20;
+  }
+}
+
+nav {
+  ul {
+    list-style: none;
+    display: flex;
+
+    li {
+      margin: 15px;
+      font-size: 20px;
+      text-decoration: none;
+
+      a {
+        text-decoration: none;
+        padding: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: black;
+      }
+
+      .active {
+        background-color: lightgray;
+        padding: 5px;
+        border-radius: 4px;
+      }
+    }
+  }
+}
