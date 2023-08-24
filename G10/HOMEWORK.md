@@ -63,4 +63,4 @@ The main goal of this homework is to go thought all the steps of creating a new 
     * any other routes you see fit and default routes like `404` or `` should be handled as well
 
 ## Task 4.
-    * Use observables :)
+* Use observables
