@@ -62,5 +62,5 @@ The main goal of this homework is to go thought all the steps of creating a new 
     * route(s) for the forms
     * any other routes you see fit and default routes like `404` or `` should be handled as well
 
-## Task 4.
+## Task 4:
 * Use observables
