@@ -6,6 +6,7 @@ import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { Subscription, map, mergeMap, tap } from 'rxjs';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-student-form',
@@ -96,6 +97,7 @@ export class StudentFormComponent implements OnInit {
 
   constructor(
     private studentsService: StudentsService,
+    private notificationsService: NotificationsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -103,10 +105,10 @@ export class StudentFormComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.route.params
       .pipe(
-        tap((value) => {
-          debugger;
-          return value;
-        }),
+        // tap((value) => {
+        //   debugger;
+        //   return value;
+        // }),
         map((params) => Number(params['id'])),
         mergeMap((id) =>
           this.studentsService.students$.pipe(
@@ -128,6 +130,10 @@ export class StudentFormComponent implements OnInit {
           this.studentForm.patchValue(studentValue);
         } else {
           this.router.navigate(['/form']);
+          this.notificationsService.pushNotification(
+            'Student not found',
+            'error'
+          );
         }
       });
   }
@@ -142,9 +148,17 @@ export class StudentFormComponent implements OnInit {
     if (this.isEditing) {
       // we are updating
       this.studentsService.updateStudent(student as Student);
+      this.notificationsService.pushNotification(
+        'Student updated successfully',
+        'success'
+      );
     } else {
       // we are creating
       this.studentsService.addStudent(student as Student);
+      this.notificationsService.pushNotification(
+        'Student added successfully',
+        'success'
+      );
     }
 
     this.router.navigate(['/students']);
