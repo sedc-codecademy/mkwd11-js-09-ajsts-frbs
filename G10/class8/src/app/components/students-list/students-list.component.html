@@ -21,11 +21,12 @@
     <div>
         <div>
             <label for="start-date">From</label>
-            <input type="date" id="start-date" (change)="onStartDateChange($event)" />
+            <input type="date" id="start-date" (change)="onStartDateChange($event)"
+                [value]="startDate | date: 'yyyy-MM-dd'" />
         </div>
         <div>
             <label for="end-date">To</label>
-            <input type="date" id="end-date" (change)="onEndDateChange($event)">
+            <input type="date" id="end-date" (change)="onEndDateChange($event)" [value]="endDate | date: 'yyyy-MM-dd'">
         </div>
     </div>
 </div>

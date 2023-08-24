@@ -341,12 +341,55 @@ export class StudentsService {
     this.updateStudentData(students);
   }
 
-  searchStudents(searchFilters?: SearchFilters): Student[] {
-    return [];
-    // // if this method is called without parameters, we are not searching, return all students
-    // if (!searchFilters) {
-    //   return this.students;
-    // }
+  searchStudents(searchFilters?: SearchFilters): Observable<Student[]> {
+    // if this method is called without parameters, we are not searching, return all students
+    if (!searchFilters) {
+      return this.students$;
+    }
+
+    return this.students$.pipe(
+      map((students) => {
+        return students.filter((student) => {
+          if (
+            searchFilters.searchTerm &&
+            !student.name
+              .toLowerCase()
+              .includes(searchFilters.searchTerm.toLowerCase())
+          ) {
+            return false;
+          }
+
+          if (
+            searchFilters.isPassing &&
+            student.grades.reduce((a, b) => a + b, 0) / student.grades.length <
+              5
+          ) {
+            return false;
+          }
+
+          if (searchFilters.group && student.group !== searchFilters.group) {
+            return false;
+          }
+
+          if (
+            searchFilters.startDate &&
+            student.dateOfBirth < searchFilters.startDate
+          ) {
+            return false;
+          }
+
+          if (
+            searchFilters.endDate &&
+            student.dateOfBirth > searchFilters.endDate
+          ) {
+            return false;
+          }
+
+          return true;
+        });
+      })
+    );
+
     // // beginning of searching for students
     // return this.students.filter((student) => {
     //   // 1. are we searching with a search term?
@@ -406,11 +449,13 @@ export class StudentsService {
   }
 
   updateStudent(student: Student) {
-    // const index = this.students.findIndex((s) => s.id === student.id);
-    // this.students[index] = {
-    //   ...this.students[index],
-    //   ...student,
-    // };
+    const students = this.studentData.getValue();
+    const index = students.findIndex((s) => s.id === student.id);
+    students[index] = {
+      ...students[index],
+      ...student,
+    };
+    this.updateStudentData(students);
   }
 
   deleteStudent(studentId: number) {

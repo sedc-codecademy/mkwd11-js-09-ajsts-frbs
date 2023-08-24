@@ -5,7 +5,7 @@ import { AcademyTypeEnum } from 'src/app/interfaces/academy-type.enum';
 import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatDate } from '@angular/common';
-import { Subscription, map, mergeMap } from 'rxjs';
+import { Subscription, map, mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-student-form',
@@ -103,6 +103,10 @@ export class StudentFormComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.route.params
       .pipe(
+        tap((value) => {
+          debugger;
+          return value;
+        }),
         map((params) => Number(params['id'])),
         mergeMap((id) =>
           this.studentsService.students$.pipe(
@@ -147,6 +151,6 @@ export class StudentFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

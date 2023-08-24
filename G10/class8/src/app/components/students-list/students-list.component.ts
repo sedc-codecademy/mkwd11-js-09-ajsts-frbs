@@ -4,7 +4,7 @@ import { StudentsService } from '../../services/students.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
 import { SortByEnum, SortDirectionEnum } from '../../interfaces/sort.enum';
-import { Observable } from 'rxjs';
+import { Observable, mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-students-list',
@@ -22,8 +22,8 @@ export class StudentsListComponent implements OnInit {
   searchTerm: string = '';
   isPassing: boolean = false;
   selectedGroup: string = '';
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  startDate: Date = new Date('1995-01-01');
+  endDate: Date = new Date();
 
   // hardcoded value of all the groups
   groups: string[] = [
@@ -48,20 +48,20 @@ export class StudentsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // fetching the query params from the URL
-    this.searchTerm = this.route.snapshot.queryParams['searchTerm'] || '';
-    this.isPassing = !!this.route.snapshot.queryParams['isPassing'];
-    this.selectedGroup = this.route.snapshot.queryParams['group'] || '';
-    this.startDate = !!this.route.snapshot.queryParams['startDate']
-      ? new Date(this.route.snapshot.queryParams['startDate'])
-      : undefined;
-    this.endDate = !!this.route.snapshot.queryParams['endDate']
-      ? new Date(this.route.snapshot.queryParams['endDate'])
-      : undefined;
-
-    this.students$ = this.studentsService.students$;
-    // we are assigning the value from the students (from the service) observable to the local component observable
-    // when using it like this without a subscribe attached, we must use the async pipe in the template
+    this.students$ = this.route.queryParams.pipe(
+      tap((queryParams) => {
+        this.searchTerm = queryParams['searchTerm'] || '';
+        this.isPassing = !!queryParams['isPassing'];
+        this.selectedGroup = queryParams['group'] || '';
+        this.startDate = queryParams['startDate']
+          ? new Date(queryParams['startDate'])
+          : new Date('1995-01-01');
+        this.endDate = queryParams['endDate']
+          ? new Date(queryParams['endDate'])
+          : new Date();
+      }),
+      mergeMap(() => this.prepareFiltersAndGetStudents())
+    );
   }
 
   sortStudents(sortBy: SortByEnum) {
@@ -129,7 +129,7 @@ export class StudentsListComponent implements OnInit {
     //     : SortDirectionEnum.asc;
   }
 
-  prepareFiltersAndGetStudents(): Student[] {
+  prepareFiltersAndGetStudents(): Observable<Student[]> {
     this.setQueryParams();
 
     return this.studentsService.searchStudents({
@@ -174,27 +174,27 @@ export class StudentsListComponent implements OnInit {
 
   onKeyUp(e: any) {
     this.searchTerm = e.target.value;
-    // this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.prepareFiltersAndGetStudents();
   }
 
   onIsPassingChange(e: any) {
     this.isPassing = e.target.checked;
-    // this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.prepareFiltersAndGetStudents();
   }
 
   onGroupSelect(e: any) {
     this.selectedGroup = e.target.value;
-    // this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.prepareFiltersAndGetStudents();
   }
 
   onStartDateChange(e: any) {
     this.startDate = new Date(e.target.value);
-    // this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.prepareFiltersAndGetStudents();
   }
 
   onEndDateChange(e: any) {
     this.endDate = new Date(e.target.value);
-    // this.students = this.prepareFiltersAndGetStudents();
+    this.students$ = this.prepareFiltersAndGetStudents();
   }
 
   onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
