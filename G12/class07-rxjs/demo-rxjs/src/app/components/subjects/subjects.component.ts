@@ -27,6 +27,7 @@ export class SubjectsComponent implements OnInit {
       console.log(this.nameArray);
     });
 
+    
     // Always next a subject after the subscription is setup
     this.observablesService.getNames();
   }
