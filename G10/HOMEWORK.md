@@ -61,3 +61,6 @@ The main goal of this homework is to go thought all the steps of creating a new 
     * `/hotels/:id` - the hotel details page should display the details of a hotel
     * route(s) for the forms
     * any other routes you see fit and default routes like `404` or `` should be handled as well
+
+## Task 4.
+    * Use observables :)
