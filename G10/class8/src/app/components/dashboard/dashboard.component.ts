@@ -2,6 +2,7 @@ import { AcademyTypeEnum } from './../../interfaces/academy-type.enum';
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../../interfaces/student.interface';
 import { StudentsService } from '../../services/students.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +10,10 @@ import { StudentsService } from '../../services/students.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  developmentStudents: Student[] = [];
-  designStudents: Student[] = [];
-  devopsStudents: Student[] = [];
-  qaStudents: Student[] = [];
-  students: Student[] = [];
+  developmentStudents$: Observable<Student[]> = new Observable<Student[]>();
+  designStudents$: Observable<Student[]> = new Observable<Student[]>();
+  devopsStudents$: Observable<Student[]> = new Observable<Student[]>();
+  qaStudents$: Observable<Student[]> = new Observable<Student[]>();
 
   constructor(private studentsService: StudentsService) {}
 
@@ -23,17 +23,17 @@ export class DashboardComponent implements OnInit {
   }
 
   calculateTopStudents() {
-    this.developmentStudents =
+    this.developmentStudents$ =
       this.studentsService.getTopThreeStudentsPerAcademy(
         AcademyTypeEnum.development
       );
-    this.devopsStudents = this.studentsService.getTopThreeStudentsPerAcademy(
+    this.devopsStudents$ = this.studentsService.getTopThreeStudentsPerAcademy(
       AcademyTypeEnum.devops
     );
-    this.designStudents = this.studentsService.getTopThreeStudentsPerAcademy(
+    this.designStudents$ = this.studentsService.getTopThreeStudentsPerAcademy(
       AcademyTypeEnum.design
     );
-    this.qaStudents = this.studentsService.getTopThreeStudentsPerAcademy(
+    this.qaStudents$ = this.studentsService.getTopThreeStudentsPerAcademy(
       AcademyTypeEnum.qa
     );
   }

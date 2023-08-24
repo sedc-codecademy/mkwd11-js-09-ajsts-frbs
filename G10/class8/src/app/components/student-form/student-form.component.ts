@@ -5,7 +5,7 @@ import { AcademyTypeEnum } from 'src/app/interfaces/academy-type.enum';
 import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatDate } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Subscription, map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-student-form',
@@ -101,29 +101,31 @@ export class StudentFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // const studentId = this.route.snapshot.params['id'];
-    // if (studentId) {
-    //   const student = this.studentsService.getStudentById(Number(studentId));
-    //   if (student) {
-    //     this.isEditing = true;
-    //     const studentValue = {
-    //       ...student,
-    //       dateOfBirth: formatDate(
-    //         new Date(student.dateOfBirth).toISOString(),
-    //         'yyyy-MM-dd',
-    //         'en'
-    //       ),
-    //     };
-    //     this.studentForm.patchValue(studentValue); // update form values
-    //     // setValue = MUST update all properties of the group object
-    //     // patchValue = can update any value of the form group object
-    //     // this.studentForm.get('name')?.patchValue('') this can be used to patch a single control
-    //     // console.log(this.studentForm.value);
-    //   }
-    // }
-    // this.subscription = this.studentForm.valueChanges.subscribe((value) => {
-    //   console.log('value', value);
-    // });
+    this.subscription = this.route.params
+      .pipe(
+        map((params) => Number(params['id'])),
+        mergeMap((id) =>
+          this.studentsService.students$.pipe(
+            map((students) => students.find((s) => s.id === id) || null)
+          )
+        )
+      )
+      .subscribe((student: Student | null) => {
+        if (student) {
+          this.isEditing = true;
+          const studentValue = {
+            ...student,
+            dateOfBirth: formatDate(
+              new Date(student.dateOfBirth).toISOString(),
+              'yyyy-MM-dd',
+              'en'
+            ),
+          };
+          this.studentForm.patchValue(studentValue);
+        } else {
+          this.router.navigate(['/form']);
+        }
+      });
   }
 
   onSubmit() {
@@ -145,7 +147,6 @@ export class StudentFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    console.log('we have unsubscribed from the form changes');
+    // this.subscription.unsubscribe();
   }
 }

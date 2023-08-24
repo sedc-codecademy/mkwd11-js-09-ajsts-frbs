@@ -2,7 +2,7 @@ import { SearchFilters } from './../interfaces/search-filters.interface';
 import { Injectable } from '@angular/core';
 import { AcademyTypeEnum } from '../interfaces/academy-type.enum';
 import { Student } from '../interfaces/student.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // determines the scope of the service. This is deprecated, in future versions, this will be the default behavior
@@ -305,26 +305,40 @@ export class StudentsService {
     this.studentData.next(students);
   }
 
-  getTopThreeStudentsPerAcademy(academy: AcademyTypeEnum): Student[] {
-    return [];
-    // return this.students
-    //   .filter((student) => student.academy === academy)
-    //   .sort((a, b) => {
-    //     const aAverageGrade =
-    //       a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
-    //     const bAverageGrade =
-    //       b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
-    //     return bAverageGrade - aAverageGrade;
-    //   })
-    //   .slice(0, 3);
+  getTopThreeStudentsPerAcademy(
+    academy: AcademyTypeEnum
+  ): Observable<Student[]> {
+    return this.students$.pipe(
+      map((students) =>
+        students
+          .filter((student) => student.academy === academy)
+          .sort((a, b) => {
+            const aAverageGrade =
+              a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
+            const bAverageGrade =
+              b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
+            return bAverageGrade - aAverageGrade;
+          })
+          .slice(0, 3)
+      )
+    );
   }
 
   gradeStudent(studentId: number, grade: number) {
-    // const studentIndex = this.students.findIndex((s) => s.id === studentId);
-    // this.students[studentIndex] = {
-    //   ...this.students[studentIndex],
-    //   grades: [...this.students[studentIndex].grades, grade],
-    // };
+    // 1. get all students as an array
+    const students = this.studentData.getValue();
+
+    // 2. find the student
+    const studentIndex = students.findIndex((s) => s.id === studentId);
+
+    // 3. update the student in the array
+    students[studentIndex] = {
+      ...students[studentIndex],
+      grades: [...students[studentIndex].grades, grade],
+    };
+
+    // 4. Update the Behavior Subject
+    this.updateStudentData(students);
   }
 
   searchStudents(searchFilters?: SearchFilters): Student[] {
@@ -385,7 +399,6 @@ export class StudentsService {
   }
 
   addStudent(student: Student) {
-    // this.students.push(student);
     const students = this.studentData.getValue();
     students.push(student);
 

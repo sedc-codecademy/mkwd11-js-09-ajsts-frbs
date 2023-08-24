@@ -201,31 +201,9 @@ export class StudentsListComponent implements OnInit {
     this.showGrading.set(studentId, false);
 
     this.studentsService.gradeStudent(studentId, grade);
-
-    // this.students = this.prepareFiltersAndGetStudents(); // refetch students from the service
-
-    // This should not be used while working with Objects and Arrays, as we need to create a new reference so that
-    // Angular knows that it needs to rerender (this is valid for properties that are used in the template)
-    // this.students[studentIndex].grades.push(grade);
-
-    // This is going to update the students locally in this component, and any other action fetching the students from the service will overwrite the new grade value
-    // console.log('Students in component', this.students);
-    // const studentIndex = this.students.findIndex((s) => s.id === studentId);
-    // this.students[studentIndex] = {
-    //   ...this.students[studentIndex],
-    //   grades: [...this.students[studentIndex].grades, grade],
-    // };
   }
 
   onShowGrading(studentId: number) {
-    // A map is basically an object
-    // {
-    // key === id of the student
-    // value === boolean (is it opened?)
-    // }
-
-    // set is used to assign value to a property in a Map
-    // get is used to fetch the value
     this.showGrading.set(studentId, !this.showGrading.get(studentId));
   }
 
