@@ -20,6 +20,8 @@ import { NotificationsService } from './services/notifications.service';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { reducer } from './store/students.reducers';
+import { StudentsEffects } from './store/students.effects';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { EffectsModule } from '@ngrx/effects';
       autoPause: true,
     }),
     EffectsModule.forRoot([]),
+    StoreModule.forFeature('students', reducer),
+    EffectsModule.forFeature([StudentsEffects]),
   ],
   providers: [StudentsService, NotificationsService],
   bootstrap: [AppComponent],

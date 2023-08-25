@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Student } from '../../interfaces/student.interface';
-import { StudentsService } from '../../services/students.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchFilters } from 'src/app/interfaces/search-filters.interface';
 import { SortByEnum, SortDirectionEnum } from '../../interfaces/sort.enum';
-import { Observable, map, mergeMap, tap } from 'rxjs';
+import { Observable, map, mergeMap, tap, Subscription } from 'rxjs';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { Store } from '@ngrx/store';
+import { StudentsState } from '../../interfaces/student-state.interface';
+import { studentsSelector } from '../../store/students.selectors';
+import { getStudents } from 'src/app/store/students.actions';
 
 @Component({
   selector: 'app-students-list',
   templateUrl: './students-list.component.html',
   styleUrls: ['./students-list.component.css'],
 })
-export class StudentsListComponent implements OnInit {
+export class StudentsListComponent implements OnInit, OnDestroy {
   students$: Observable<Student[]> = new Observable<Student[]>();
   sortByEnum = SortByEnum;
   sortBy: SortByEnum = SortByEnum.id;
@@ -41,29 +44,33 @@ export class StudentsListComponent implements OnInit {
     'G11',
     'G12',
   ];
+  subscription: Subscription = new Subscription();
 
   constructor(
-    private studentsService: StudentsService,
     private notificationsService: NotificationsService,
+    private store: Store<StudentsState>,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.students$ = this.route.queryParams.pipe(
-      tap((queryParams) => {
-        this.searchTerm = queryParams['searchTerm'] || '';
-        this.isPassing = !!queryParams['isPassing'];
-        this.selectedGroup = queryParams['group'] || '';
-        this.startDate = queryParams['startDate']
-          ? new Date(queryParams['startDate'])
-          : new Date('1995-01-01');
-        this.endDate = queryParams['endDate']
-          ? new Date(queryParams['endDate'])
-          : new Date();
-      }),
-      mergeMap(() => this.prepareFiltersAndGetStudents())
-    );
+    this.students$ = this.store.select(studentsSelector);
+
+    this.subscription = this.route.queryParams
+      .pipe(
+        tap((queryParams) => {
+          this.searchTerm = queryParams['searchTerm'] || '';
+          this.isPassing = !!queryParams['isPassing'];
+          this.selectedGroup = queryParams['group'] || '';
+          this.startDate = queryParams['startDate']
+            ? new Date(queryParams['startDate'])
+            : new Date('1995-01-01');
+          this.endDate = queryParams['endDate']
+            ? new Date(queryParams['endDate'])
+            : new Date();
+        })
+      )
+      .subscribe(() => this.prepareFiltersAndGetStudents());
   }
 
   sortStudents(sortBy: SortByEnum) {
@@ -139,16 +146,20 @@ export class StudentsListComponent implements OnInit {
         : SortDirectionEnum.asc;
   }
 
-  prepareFiltersAndGetStudents(): Observable<Student[]> {
+  prepareFiltersAndGetStudents(): void {
     this.setQueryParams();
 
-    return this.studentsService.searchStudents({
-      searchTerm: this.searchTerm,
-      isPassing: this.isPassing,
-      group: this.selectedGroup,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    });
+    this.store.dispatch(
+      getStudents({
+        filters: {
+          searchTerm: this.searchTerm,
+          isPassing: this.isPassing,
+          group: this.selectedGroup,
+          startDate: this.startDate,
+          endDate: this.endDate,
+        },
+      })
+    );
   }
 
   setQueryParams() {
@@ -181,33 +192,33 @@ export class StudentsListComponent implements OnInit {
 
   onKeyUp(e: any) {
     this.searchTerm = e.target.value;
-    this.students$ = this.prepareFiltersAndGetStudents();
+    this.prepareFiltersAndGetStudents();
   }
 
   onIsPassingChange(e: any) {
     this.isPassing = e.target.checked;
-    this.students$ = this.prepareFiltersAndGetStudents();
+    this.prepareFiltersAndGetStudents();
   }
 
   onGroupSelect(e: any) {
     this.selectedGroup = e.target.value;
-    this.students$ = this.prepareFiltersAndGetStudents();
+    this.prepareFiltersAndGetStudents();
   }
 
   onStartDateChange(e: any) {
     this.startDate = new Date(e.target.value);
-    this.students$ = this.prepareFiltersAndGetStudents();
+    this.prepareFiltersAndGetStudents();
   }
 
   onEndDateChange(e: any) {
     this.endDate = new Date(e.target.value);
-    this.students$ = this.prepareFiltersAndGetStudents();
+    this.prepareFiltersAndGetStudents();
   }
 
   onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
     this.showGrading.set(studentId, false);
 
-    this.studentsService.gradeStudent(studentId, grade);
+    // this.studentsService.gradeStudent(studentId, grade);
   }
 
   onShowGrading(studentId: number) {
@@ -219,10 +230,14 @@ export class StudentsListComponent implements OnInit {
   }
 
   onDelete(studentId: number) {
-    this.studentsService.deleteStudent(studentId);
+    // this.studentsService.deleteStudent(studentId);
     this.notificationsService.pushNotification(
       'Student deleted successfully',
       'success'
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

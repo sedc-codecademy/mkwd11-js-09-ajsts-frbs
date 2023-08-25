@@ -1,8 +1,10 @@
-import { filter } from 'rxjs';
-import { reducers } from './../reducers/index';
 import { StudentsState } from '../interfaces/student-state.interface';
 import { createReducer, on } from '@ngrx/store';
-import { getStudents } from './students.actions';
+import {
+  getStudents,
+  getStudentsFailure,
+  getStudentsSuccess,
+} from './students.actions';
 
 export const initialState: StudentsState = {
   students: [],
@@ -17,5 +19,16 @@ export const reducer = createReducer(
     ...state,
     isLoading: true,
     filters: action.filters,
+  })),
+  on(getStudentsSuccess, (state, action) => ({
+    ...state,
+    students: action.students,
+    isLoading: false,
+    error: '',
+  })),
+  on(getStudentsFailure, (state, action) => ({
+    ...state,
+    error: action.error,
+    isLoading: false,
   }))
 );
