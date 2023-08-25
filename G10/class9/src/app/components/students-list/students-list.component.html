@@ -51,7 +51,7 @@
             <td>{{student.group | uppercase }}</td>
             <td appGradeColor [grade]="student.grades | averageGrade">
                 <div>
-                    {{student.grades | averageGrade }}
+                    {{student.grades | averageGrade | number: '1.0-1' }}
                 </div>
                 <div *ngIf="showGrading.get(student.id)">
                     <!-- showGrading[student.id] -->

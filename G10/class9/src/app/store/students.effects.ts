@@ -3,11 +3,24 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StudentsService } from '../services/students.service';
 import {
+  addStudent,
+  addStudentFailure,
+  addStudentSuccess,
+  deleteStudent,
+  deleteStudentFailure,
+  deleteStudentSuccess,
   getStudents,
   getStudentsFailure,
   getStudentsSuccess,
+  gradeStudent,
+  gradeStudentFailure,
+  gradeStudentSuccess,
+  updateStudent,
+  updateStudentFailure,
+  updateStudentSuccess,
 } from './students.actions';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { Student } from '../interfaces/student.interface';
 
 @Injectable()
 export class StudentsEffects {
@@ -27,6 +40,48 @@ export class StudentsEffects {
           )
         );
       })
+    )
+  );
+
+  addStudent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addStudent),
+      tap(({ student }: { student: Student }) =>
+        this.studentsService.addStudent(student)
+      ),
+      map(() => addStudentSuccess()),
+      catchError((error) => of(addStudentFailure({ error: error.message })))
+    )
+  );
+
+  updateStudent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateStudent),
+      tap(({ student }: { student: Student }) =>
+        this.studentsService.updateStudent(student)
+      ),
+      map(() => updateStudentSuccess()),
+      catchError((error) => of(updateStudentFailure({ error: error.message })))
+    )
+  );
+
+  deleteStudent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteStudent),
+      tap(({ id }: { id: number }) => this.studentsService.deleteStudent(id)),
+      map(() => deleteStudentSuccess()),
+      catchError((error) => of(deleteStudentFailure({ error: error.message })))
+    )
+  );
+
+  gradeStudent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gradeStudent),
+      tap(({ studentId, grade }: { studentId: number; grade: number }) =>
+        this.studentsService.gradeStudent(studentId, grade)
+      ),
+      map(() => gradeStudentSuccess()),
+      catchError((error) => of(gradeStudentFailure({ error: error.message })))
     )
   );
 }

@@ -8,7 +8,11 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { Store } from '@ngrx/store';
 import { StudentsState } from '../../interfaces/student-state.interface';
 import { studentsSelector } from '../../store/students.selectors';
-import { getStudents } from 'src/app/store/students.actions';
+import {
+  deleteStudent,
+  getStudents,
+  gradeStudent,
+} from 'src/app/store/students.actions';
 
 @Component({
   selector: 'app-students-list',
@@ -218,7 +222,12 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
     this.showGrading.set(studentId, false);
 
-    // this.studentsService.gradeStudent(studentId, grade);
+    this.store.dispatch(
+      gradeStudent({
+        studentId,
+        grade,
+      })
+    );
   }
 
   onShowGrading(studentId: number) {
@@ -229,8 +238,12 @@ export class StudentsListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/form', studentId]);
   }
 
-  onDelete(studentId: number) {
-    // this.studentsService.deleteStudent(studentId);
+  onDelete(id: number) {
+    this.store.dispatch(
+      deleteStudent({
+        id,
+      })
+    );
     this.notificationsService.pushNotification(
       'Student deleted successfully',
       'success'
