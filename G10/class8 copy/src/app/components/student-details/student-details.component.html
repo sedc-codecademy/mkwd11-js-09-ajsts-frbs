@@ -1,0 +1,15 @@
+<div class="wrapper" *ngIf="!!student?.id; else notFound">
+    <div>
+        <button (click)="goBack()">
+            Go Back
+        </button>
+    </div>
+    <h1>{{student?.name}}</h1>
+    <p>Date of Birth: {{student?.dateOfBirth | date: 'd MMM yyyy' }}</p>
+    <p>Academy: {{student?.academy}}</p>
+    <p>Group: {{student?.group}}</p>
+</div>
+
+<ng-template #notFound>
+    Student not found
+</ng-template>

@@ -1,0 +1,22 @@
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/dashboard" routerLinkActive="active">Home</a>
+        </li>
+        <li>
+            <a routerLink="/students" routerLinkActive="active">Students</a>
+        </li>
+        <li>
+            <a routerLink="/form" routerLinkActive="active">Form</a>
+        </li>
+    </ul>
+
+    <div class="notification" *ngIf="!!notification" [ngClass]="{
+        'error': notification?.type === 'error',
+        'success': notification?.type === 'success'
+    }">
+        <p>
+            {{ notification?.message }}
+        </p>
+    </div>
+</nav>
