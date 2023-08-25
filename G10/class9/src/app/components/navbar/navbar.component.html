@@ -12,11 +12,11 @@
     </ul>
 
     <div class="notification" *ngIf="!!notification" [ngClass]="{
-        'error': notification?.type === 'error',
-        'success': notification?.type === 'success'
+        'error': notification.type === 'error',
+        'success': notification.type === 'success'
     }">
         <p>
-            {{ notification?.message }}
+            {{ notification.message }}
         </p>
     </div>
 </nav>
