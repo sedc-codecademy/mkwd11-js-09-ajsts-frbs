@@ -45,7 +45,7 @@ export const updateStudentFailure = createAction(
 
 export const deleteStudent = createAction(
   '[Students] Delete student',
-  props<{ id: number }>()
+  props<{ id: string }>()
 );
 
 export const deleteStudentSuccess = createAction(
@@ -59,7 +59,7 @@ export const deleteStudentFailure = createAction(
 
 export const gradeStudent = createAction(
   '[Students] Add student grade',
-  props<{ studentId: number; grade: number }>()
+  props<{ studentId: string; grade: number }>()
 );
 
 export const gradeStudentSuccess = createAction(

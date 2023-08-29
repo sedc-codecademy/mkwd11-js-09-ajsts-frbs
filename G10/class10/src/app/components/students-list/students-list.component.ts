@@ -219,7 +219,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
     this.prepareFiltersAndGetStudents();
   }
 
-  onChangedGrade({ studentId, grade }: { studentId: number; grade: number }) {
+  onChangedGrade({ studentId, grade }: { studentId: string; grade: number }) {
     this.showGrading.set(studentId, false);
 
     this.store.dispatch(
@@ -230,15 +230,15 @@ export class StudentsListComponent implements OnInit, OnDestroy {
     );
   }
 
-  onShowGrading(studentId: number) {
+  onShowGrading(studentId: string) {
     this.showGrading.set(studentId, !this.showGrading.get(studentId));
   }
 
-  onEdit(studentId: number) {
+  onEdit(studentId: string) {
     this.router.navigate(['/form', studentId]);
   }
 
-  onDelete(id: number) {
+  onDelete(id: string) {
     this.store.dispatch(
       deleteStudent({
         id,

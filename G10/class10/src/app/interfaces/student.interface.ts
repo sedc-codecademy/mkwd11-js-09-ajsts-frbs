@@ -1,7 +1,7 @@
 import { AcademyTypeEnum } from './academy-type.enum';
 
 export interface Student {
-  id: number;
+  id: string;
   name: string;
   dateOfBirth: Date;
   academy: AcademyTypeEnum;

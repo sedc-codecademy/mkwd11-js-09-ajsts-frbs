@@ -20,7 +20,6 @@ import { CountriesService } from 'src/app/services/countries.service';
 })
 export class StudentFormComponent implements OnInit {
   studentForm = new FormGroup({
-    id: new FormControl<number>(Date.now()), // just a workaround, this is not common practice
     name: new FormControl<string>(
       '',
       Validators.compose([
@@ -113,7 +112,7 @@ export class StudentFormComponent implements OnInit {
     this.subscriptions.push(
       this.route.params
         .pipe(
-          map((params) => Number(params['id'])),
+          map((params) => params['id']),
           mergeMap((id) =>
             this.store
               .select(studentsSelector)

@@ -23,16 +23,12 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.route.params
       .pipe(
-        map((params) => Number(params['id'])), // returns a parsed ID
+        map((params) => params['id']),
         mergeMap((id) =>
           this.studentsService.students$.pipe(
             map((students) => students.find((s) => s.id === id)) // returns a single student
           )
         )
-        // tap((student) => {
-        //   console.log('Student details executed');
-        //   this.student = student;
-        // })
       )
       .subscribe((student) => {
         this.student = student;

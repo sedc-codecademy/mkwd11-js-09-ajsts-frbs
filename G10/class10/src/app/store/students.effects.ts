@@ -19,7 +19,7 @@ import {
   updateStudentFailure,
   updateStudentSuccess,
 } from './students.actions';
-import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { Student } from '../interfaces/student.interface';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class StudentsEffects {
   addStudent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addStudent),
-      tap(({ student }: { student: Student }) =>
+      switchMap(({ student }: { student: Student }) =>
         this.studentsService.addStudent(student)
       ),
       map(() => addStudentSuccess()),
@@ -68,7 +68,9 @@ export class StudentsEffects {
   deleteStudent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteStudent),
-      tap(({ id }: { id: number }) => this.studentsService.deleteStudent(id)),
+      switchMap(({ id }: { id: string }) =>
+        this.studentsService.deleteStudent(id)
+      ),
       map(() => deleteStudentSuccess()),
       catchError((error) => of(deleteStudentFailure({ error: error.message })))
     )
@@ -77,7 +79,7 @@ export class StudentsEffects {
   gradeStudent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gradeStudent),
-      tap(({ studentId, grade }: { studentId: number; grade: number }) =>
+      tap(({ studentId, grade }: { studentId: string; grade: number }) =>
         this.studentsService.gradeStudent(studentId, grade)
       ),
       map(() => gradeStudentSuccess()),
