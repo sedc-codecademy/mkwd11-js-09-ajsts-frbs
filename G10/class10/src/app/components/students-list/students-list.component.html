@@ -38,6 +38,7 @@
         <th (click)="sortStudents(sortByEnum.dateOfBirth)">Date of Birth</th>
         <th (click)="sortStudents(sortByEnum.academy)">Academy</th>
         <th (click)="sortStudents(sortByEnum.group)">Group</th>
+        <th>Location</th>
         <th (click)="sortStudents(sortByEnum.avgGrade)">Avg Grade</th>
         <th>Actions</th>
     </thead>
@@ -49,6 +50,7 @@
             <td>{{student.dateOfBirth | date: 'dd.MM.yyyy'}}</td>
             <td>{{student.academy}}</td>
             <td>{{student.group | uppercase }}</td>
+            <td>{{student.location || 'N/A' }}</td>
             <td appGradeColor [grade]="student.grades | averageGrade">
                 <div>
                     {{student.grades | averageGrade | number: '1.0-1' }}

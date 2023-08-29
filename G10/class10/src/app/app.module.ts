@@ -22,6 +22,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './store/students.reducers';
 import { StudentsEffects } from './store/students.effects';
+import { HttpClientModule } from '@angular/common/http';
+import { CountriesService } from './services/countries.service';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,9 @@ import { StudentsEffects } from './store/students.effects';
     EffectsModule.forRoot([]),
     StoreModule.forFeature('students', reducer),
     EffectsModule.forFeature([StudentsEffects]),
+    HttpClientModule,
   ],
-  providers: [StudentsService, NotificationsService],
+  providers: [StudentsService, NotificationsService, CountriesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

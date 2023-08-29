@@ -7,4 +7,5 @@ export interface Student {
   academy: AcademyTypeEnum;
   group: string;
   grades: number[];
+  location?: string;
 }

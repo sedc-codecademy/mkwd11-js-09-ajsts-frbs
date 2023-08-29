@@ -47,6 +47,13 @@
     </div>
 
     <div>
+        <label for="location">Location</label>
+        <select name="location" id="location" formControlName="location">
+            <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+        </select>
+    </div>
+
+    <div>
         <button type="submit" [disabled]="studentForm.invalid">Submit</button>
     </div>
 </form>

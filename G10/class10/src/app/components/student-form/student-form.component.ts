@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { StudentsState } from 'src/app/interfaces/student-state.interface';
 import { addStudent, updateStudent } from 'src/app/store/students.actions';
 import { studentsSelector } from 'src/app/store/students.selectors';
+import { CountriesService } from 'src/app/services/countries.service';
 
 @Component({
   selector: 'app-student-form',
@@ -23,7 +24,6 @@ export class StudentFormComponent implements OnInit {
     name: new FormControl<string>(
       '',
       Validators.compose([
-        // Validators.compose is used when we have more than 1 validator
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(20),
@@ -36,8 +36,9 @@ export class StudentFormComponent implements OnInit {
       Validators.required
     ),
     grades: new FormControl<number[]>([]), // a form control that is not connected to the template
+    location: new FormControl<string>(''),
   });
-  subscription: Subscription = new Subscription();
+  subscriptions: Subscription[] = [];
   academies = Object.values(AcademyTypeEnum);
   groups: string[] = [
     'G1',
@@ -54,6 +55,7 @@ export class StudentFormComponent implements OnInit {
     'G12',
   ];
   isEditing: boolean = false; // we are editing if we have ID as parameter
+  countries: string[] = [];
 
   get nameHasErrorRequired() {
     return this.studentForm.get('name')?.hasError('required');
@@ -103,39 +105,50 @@ export class StudentFormComponent implements OnInit {
     private notificationsService: NotificationsService,
     private store: Store<StudentsState>,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private countriesService: CountriesService
   ) {}
 
   ngOnInit() {
-    this.subscription = this.route.params
-      .pipe(
-        map((params) => Number(params['id'])),
-        mergeMap((id) =>
-          this.store
-            .select(studentsSelector)
-            .pipe(map((students) => students.find((s) => s.id === id) || null))
+    this.subscriptions.push(
+      this.route.params
+        .pipe(
+          map((params) => Number(params['id'])),
+          mergeMap((id) =>
+            this.store
+              .select(studentsSelector)
+              .pipe(
+                map((students) => students.find((s) => s.id === id) || null)
+              )
+          )
         )
-      )
-      .subscribe((student: Student | null) => {
-        if (student) {
-          this.isEditing = true;
-          const studentValue = {
-            ...student,
-            dateOfBirth: formatDate(
-              new Date(student.dateOfBirth).toISOString(),
-              'yyyy-MM-dd',
-              'en'
-            ),
-          };
-          this.studentForm.patchValue(studentValue);
-        } else {
-          this.router.navigate(['/form']);
-          this.notificationsService.pushNotification(
-            'Student not found',
-            'error'
-          );
-        }
-      });
+        .subscribe((student: Student | null) => {
+          if (student) {
+            this.isEditing = true;
+            const studentValue = {
+              ...student,
+              dateOfBirth: formatDate(
+                new Date(student.dateOfBirth).toISOString(),
+                'yyyy-MM-dd',
+                'en'
+              ),
+            };
+            this.studentForm.patchValue(studentValue);
+          } else {
+            this.router.navigate(['/form']);
+            this.notificationsService.pushNotification(
+              'Student not found',
+              'error'
+            );
+          }
+        }),
+      this.countriesService.getCountries().subscribe((countries) => {
+        console.log(countries);
+        this.countries = countries;
+      })
+    );
+
+    this.studentForm.valueChanges.subscribe((value) => console.log(value));
   }
 
   onSubmit() {
@@ -172,6 +185,6 @@ export class StudentFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }
