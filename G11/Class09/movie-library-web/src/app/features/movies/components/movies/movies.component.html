@@ -1,0 +1,12 @@
+<main>
+  <h2>Available movies in our library:</h2>
+
+  <div class="moviesContiner" *ngIf="!isFetching; else loading">
+    <app-movie-card class="movieCard" *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+  </div>
+
+  <ng-template #loading>
+    <!-- Spinner/loader for better UX -->
+    Loading...
+  </ng-template>
+</main>

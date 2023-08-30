@@ -1,0 +1,9 @@
+.moviesContiner {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+ .movieCard {
+  width: 200px;
+ }
