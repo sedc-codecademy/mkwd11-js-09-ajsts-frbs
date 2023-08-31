@@ -2,11 +2,11 @@ import { SearchFilters } from './../interfaces/search-filters.interface';
 import { Injectable } from '@angular/core';
 import { AcademyTypeEnum } from '../interfaces/academy-type.enum';
 import { Student } from '../interfaces/student.interface';
-import { BehaviorSubject, Observable, filter, from, map } from 'rxjs';
+import { Observable, filter, from, map, mergeMap, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
-  providedIn: 'root', // determines the scope of the service. This is deprecated, in future versions, this will be the default behavior
+  providedIn: 'root',
 })
 export class StudentsService {
   students$: Observable<Student[]> = new Observable<Student[]>();
@@ -38,18 +38,28 @@ export class StudentsService {
     );
   }
 
-  gradeStudent(studentId: string, grade: number) {
-    // // 1. get all students as an array
-    // const students = this.studentData.getValue();
-    // // 2. find the student
-    // const studentIndex = students.findIndex((s) => s.id === studentId);
-    // // 3. update the student in the array
-    // students[studentIndex] = {
-    //   ...students[studentIndex],
-    //   grades: [...students[studentIndex].grades, grade],
-    // };
-    // // 4. Update the Behavior Subject
-    // this.updateStudentData(students);
+  gradeStudent(studentId: string, grade: number): Observable<void | null> {
+    return this.firestore
+      .collection('students')
+      .doc(studentId)
+      .get()
+      .pipe(
+        mergeMap((student) => {
+          if (!student.exists) {
+            return of(null);
+          }
+          // @ts-ignore
+          const grades = student.data()?.grades || [];
+          grades.push(grade);
+
+          return from(
+            this.firestore
+              .collection('students')
+              .doc(studentId)
+              .update({ grades })
+          );
+        })
+      );
   }
 
   searchStudents(searchFilters?: SearchFilters): Observable<Student[]> {
@@ -111,14 +121,18 @@ export class StudentsService {
     return from(this.firestore.collection('students').add(newStudent));
   }
 
-  updateStudent(student: Student) {
-    // const students = this.studentData.getValue();
-    // const index = students.findIndex((s) => s.id === student.id);
-    // students[index] = {
-    //   ...students[index],
-    //   ...student,
-    // };
-    // this.updateStudentData(students);
+  updateStudent(student: Student): Observable<void> {
+    const updateStudent = {
+      ...student,
+      dateOfBirth: student.dateOfBirth.toISOString(),
+    };
+
+    return from(
+      this.firestore
+        .collection('students')
+        .doc(student.id)
+        .update(updateStudent)
+    );
   }
 
   deleteStudent(studentId: string): Observable<void> {

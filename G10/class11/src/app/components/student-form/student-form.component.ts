@@ -1,4 +1,3 @@
-import { StudentsService } from './../../services/students.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AcademyTypeEnum } from 'src/app/interfaces/academy-type.enum';
@@ -55,6 +54,7 @@ export class StudentFormComponent implements OnInit {
   ];
   isEditing: boolean = false; // we are editing if we have ID as parameter
   countries: string[] = [];
+  studentId: string = '';
 
   get nameHasErrorRequired() {
     return this.studentForm.get('name')?.hasError('required');
@@ -123,6 +123,7 @@ export class StudentFormComponent implements OnInit {
         )
         .subscribe((student: Student | null) => {
           if (student) {
+            this.studentId = student.id;
             this.isEditing = true;
             const studentValue = {
               ...student,
@@ -135,10 +136,13 @@ export class StudentFormComponent implements OnInit {
             this.studentForm.patchValue(studentValue);
           } else {
             this.router.navigate(['/form']);
-            this.notificationsService.pushNotification(
-              'Student not found',
-              'error'
-            );
+
+            if (this.studentId) {
+              this.notificationsService.pushNotification(
+                'Student not found',
+                'error'
+              );
+            }
           }
         }),
       this.countriesService.getCountries().subscribe((countries) => {
@@ -153,6 +157,7 @@ export class StudentFormComponent implements OnInit {
   onSubmit() {
     const student = {
       ...this.studentForm.value,
+      id: this.studentId,
       dateOfBirth: new Date(this.studentForm.value.dateOfBirth ?? ''),
     };
 

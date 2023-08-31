@@ -57,7 +57,7 @@ export class StudentsEffects {
   updateStudent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateStudent),
-      tap(({ student }: { student: Student }) =>
+      switchMap(({ student }: { student: Student }) =>
         this.studentsService.updateStudent(student)
       ),
       map(() => updateStudentSuccess()),
@@ -79,7 +79,7 @@ export class StudentsEffects {
   gradeStudent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gradeStudent),
-      tap(({ studentId, grade }: { studentId: string; grade: number }) =>
+      switchMap(({ studentId, grade }: { studentId: string; grade: number }) =>
         this.studentsService.gradeStudent(studentId, grade)
       ),
       map(() => gradeStudentSuccess()),
