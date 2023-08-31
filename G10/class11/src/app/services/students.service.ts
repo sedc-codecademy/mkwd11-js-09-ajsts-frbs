@@ -21,20 +21,6 @@ export class StudentsService {
       .valueChanges({
         idField: 'id',
       });
-    // return this.students$.pipe(
-    //   map((students) =>
-    //     students
-    //       .filter((student) => student.academy === academy)
-    //       .sort((a, b) => {
-    //         const aAverageGrade =
-    //           a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
-    //         const bAverageGrade =
-    //           b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
-    //         return bAverageGrade - aAverageGrade;
-    //       })
-    //       .slice(0, 3)
-    //   )
-    // );
   }
 
   gradeStudent(studentId: string, grade: number): Observable<void | null> {
@@ -138,6 +124,7 @@ export class StudentsService {
   }
 
   deleteStudent(studentId: string): Observable<void> {
+    // throw new Error('Something went wrong');
     return from(this.firestore.collection('students').doc(studentId).delete());
   }
 }

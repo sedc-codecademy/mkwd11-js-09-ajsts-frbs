@@ -187,10 +187,6 @@ export class StudentsListComponent implements OnInit, OnDestroy {
         id,
       })
     );
-    this.notificationsService.pushNotification(
-      'Student deleted successfully',
-      'success'
-    );
   }
 
   ngOnDestroy() {

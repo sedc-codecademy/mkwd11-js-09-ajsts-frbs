@@ -168,10 +168,6 @@ export class StudentFormComponent implements OnInit {
           student: student as Student,
         })
       );
-      this.notificationsService.pushNotification(
-        'Student updated successfully',
-        'success'
-      );
     } else {
       // we are creating
       this.store.dispatch(

@@ -5,6 +5,7 @@ import { StudentsListComponent } from './components/students-list/students-list.
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
+import { AuthComponent } from './components/auth/auth/auth.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'form', component: StudentFormComponent },
   { path: 'form/:id', component: StudentFormComponent },
+  { path: 'login', component: AuthComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
