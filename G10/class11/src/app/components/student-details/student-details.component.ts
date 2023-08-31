@@ -4,6 +4,9 @@ import { Student } from '../../interfaces/student.interface';
 import { Location } from '@angular/common';
 import { StudentsService } from '../../services/students.service';
 import { Subscription, map, mergeMap, tap } from 'rxjs';
+import { StudentsState } from 'src/app/interfaces/student-state.interface';
+import { Store } from '@ngrx/store';
+import { studentsSelector } from 'src/app/store/students.selectors';
 
 @Component({
   selector: 'app-student-details',
@@ -17,7 +20,7 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private studentsService: StudentsService
+    private store: Store<StudentsState>
   ) {}
 
   ngOnInit() {
@@ -25,9 +28,9 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
       .pipe(
         map((params) => params['id']),
         mergeMap((id) =>
-          this.studentsService.students$.pipe(
-            map((students) => students.find((s) => s.id === id)) // returns a single student
-          )
+          this.store
+            .select(studentsSelector)
+            .pipe(map((students) => students.find((s) => s.id === id)))
         )
       )
       .subscribe((student) => {

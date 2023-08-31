@@ -22,7 +22,7 @@ import {
 export class StudentsListComponent implements OnInit, OnDestroy {
   students$: Observable<Student[]> = new Observable<Student[]>();
   sortByEnum = SortByEnum;
-  sortBy: SortByEnum = SortByEnum.id;
+  sortBy: SortByEnum = SortByEnum.name;
   sortDirection: SortDirectionEnum = SortDirectionEnum.asc;
   showGrading = new Map(); // this will create an empty map that is similar (visually) to an empty object {}
 
@@ -80,74 +80,12 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   sortStudents(sortBy: SortByEnum) {
     this.sortBy = sortBy;
 
-    this.students$ = this.students$.pipe(
-      map((students) => {
-        return students.sort((a, b) => {
-          // Sorting ascending
-          if (this.sortDirection === SortDirectionEnum.asc) {
-            // Sort by name
-            if (
-              this.sortBy === SortByEnum.name ||
-              this.sortBy === SortByEnum.academy
-            ) {
-              // sorting strings is done with localeCompare
-              return a[this.sortBy]
-                .toLowerCase()
-                .localeCompare(b[this.sortBy].toLowerCase());
-            }
-            // Sort by group
-            if (this.sortBy === SortByEnum.group) {
-              // we remove the letter G so that we can compare the numbers
-              return (
-                Number(a.group.replace('G', '')) -
-                Number(b.group.replace('G', ''))
-              );
-            }
-            // Sort by avg grade
-            if (this.sortBy === SortByEnum.avgGrade) {
-              // we are comparing the sum of grades
-              return (
-                a.grades.reduce((sum, curr) => sum + curr, 0) -
-                b.grades.reduce((sum, curr) => sum + curr, 0)
-              );
-            }
-            return a[this.sortBy] > b[this.sortBy] ? 1 : -1;
-            // Sorting descending
-          } else {
-            // else should be same as the above statement, we just change the places of a and b
-            // Sort by name
-            if (
-              this.sortBy === SortByEnum.name ||
-              this.sortBy === SortByEnum.academy
-            ) {
-              return b[this.sortBy]
-                .toLocaleLowerCase()
-                .localeCompare(a[this.sortBy].toLocaleLowerCase());
-            }
-            // Sort by group
-            if (this.sortBy === SortByEnum.group) {
-              return (
-                Number(b.group.replace('G', '')) -
-                Number(a.group.replace('G', ''))
-              );
-            }
-            // Sort by avg grade
-            if (this.sortBy === SortByEnum.avgGrade) {
-              return (
-                b.grades.reduce((sum, curr) => sum + curr, 0) -
-                a.grades.reduce((sum, curr) => sum + curr, 0)
-              );
-            }
-            return a[this.sortBy] < b[this.sortBy] ? 1 : -1;
-          }
-        });
-      })
-    );
-
     this.sortDirection =
       this.sortDirection === SortDirectionEnum.asc
         ? SortDirectionEnum.desc
         : SortDirectionEnum.asc;
+
+    this.prepareFiltersAndGetStudents();
   }
 
   prepareFiltersAndGetStudents(): void {
@@ -161,13 +99,18 @@ export class StudentsListComponent implements OnInit, OnDestroy {
           group: this.selectedGroup,
           startDate: this.startDate,
           endDate: this.endDate,
+          sortBy: this.sortBy,
+          sortDirection: this.sortDirection,
         },
       })
     );
   }
 
   setQueryParams() {
-    let queryParams: SearchFilters = {};
+    let queryParams: SearchFilters = {
+      sortBy: this.sortBy,
+      sortDirection: this.sortDirection,
+    };
 
     if (this.searchTerm) {
       queryParams.searchTerm = this.searchTerm;

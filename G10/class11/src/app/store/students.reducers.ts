@@ -17,11 +17,15 @@ import {
   updateStudentFailure,
   updateStudentSuccess,
 } from './students.actions';
+import { SortDirectionEnum } from '../interfaces/sort.enum';
 
 export const initialState: StudentsState = {
   students: [],
   isLoading: false,
-  filters: {},
+  filters: {
+    sortBy: 'name',
+    sortDirection: SortDirectionEnum.asc,
+  },
   error: '',
 };
 

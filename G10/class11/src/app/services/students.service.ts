@@ -2,40 +2,39 @@ import { SearchFilters } from './../interfaces/search-filters.interface';
 import { Injectable } from '@angular/core';
 import { AcademyTypeEnum } from '../interfaces/academy-type.enum';
 import { Student } from '../interfaces/student.interface';
-import { Observable, filter, from, map, mergeMap, of } from 'rxjs';
+import { Observable, from, map, mergeMap, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentsService {
-  students$: Observable<Student[]> = new Observable<Student[]>();
-
-  constructor(private firestore: AngularFirestore) {
-    this.students$ = this.firestore
-      .collection<Student>('students')
-      .valueChanges({
-        idField: 'id',
-      });
-  }
+  constructor(private firestore: AngularFirestore) {}
 
   getTopThreeStudentsPerAcademy(
     academy: AcademyTypeEnum
   ): Observable<Student[]> {
-    return this.students$.pipe(
-      map((students) =>
-        students
-          .filter((student) => student.academy === academy)
-          .sort((a, b) => {
-            const aAverageGrade =
-              a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
-            const bAverageGrade =
-              b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
-            return bAverageGrade - aAverageGrade;
-          })
-          .slice(0, 3)
+    return this.firestore
+      .collection<Student>('students', (ref) =>
+        ref.where('academy', '==', academy).orderBy('grades', 'desc').limit(3)
       )
-    );
+      .valueChanges({
+        idField: 'id',
+      });
+    // return this.students$.pipe(
+    //   map((students) =>
+    //     students
+    //       .filter((student) => student.academy === academy)
+    //       .sort((a, b) => {
+    //         const aAverageGrade =
+    //           a.grades.reduce((acc, grade) => acc + grade, 0) / a.grades.length;
+    //         const bAverageGrade =
+    //           b.grades.reduce((acc, grade) => acc + grade, 0) / b.grades.length;
+    //         return bAverageGrade - aAverageGrade;
+    //       })
+    //       .slice(0, 3)
+    //   )
+    // );
   }
 
   gradeStudent(studentId: string, grade: number): Observable<void | null> {
@@ -62,54 +61,57 @@ export class StudentsService {
       );
   }
 
-  searchStudents(searchFilters?: SearchFilters): Observable<Student[]> {
-    // if this method is called without parameters, we are not searching, return all students
-    if (!searchFilters) {
-      return this.students$;
-    }
-
-    return this.students$.pipe(
-      map((students) => {
-        return students.filter((student) => {
-          if (
-            searchFilters.searchTerm &&
-            !student.name
-              .toLowerCase()
-              .includes(searchFilters.searchTerm.toLowerCase())
-          ) {
-            return false;
-          }
-
-          if (
-            searchFilters.isPassing &&
-            student.grades.reduce((a, b) => a + b, 0) / student.grades.length <
-              5
-          ) {
-            return false;
-          }
-
-          if (searchFilters.group && student.group !== searchFilters.group) {
-            return false;
-          }
-
-          if (
-            searchFilters.startDate &&
-            student.dateOfBirth < searchFilters.startDate
-          ) {
-            return false;
-          }
-
-          if (
-            searchFilters.endDate &&
-            student.dateOfBirth > searchFilters.endDate
-          ) {
-            return false;
-          }
-
-          return true;
-        });
+  searchStudents(searchFilters: SearchFilters): Observable<Student[]> {
+    return this.firestore
+      .collection<Student>('students', (ref) =>
+        ref.orderBy(searchFilters.sortBy, searchFilters.sortDirection)
+      )
+      .valueChanges({
+        idField: 'id',
       })
-    );
+      .pipe(
+        map((students) => {
+          return students.filter((student) => {
+            if (
+              searchFilters.searchTerm &&
+              !student.name
+                .toLowerCase()
+                .includes(searchFilters.searchTerm.toLowerCase())
+            ) {
+              return false;
+            }
+
+            if (
+              searchFilters.isPassing &&
+              student.grades.reduce((a, b) => a + b, 0) /
+                student.grades.length <
+                5
+            ) {
+              return false;
+            }
+
+            if (searchFilters.group && student.group !== searchFilters.group) {
+              return false;
+            }
+
+            if (
+              searchFilters.startDate &&
+              student.dateOfBirth < searchFilters.startDate
+            ) {
+              return false;
+            }
+
+            if (
+              searchFilters.endDate &&
+              student.dateOfBirth > searchFilters.endDate
+            ) {
+              return false;
+            }
+
+            return true;
+          });
+        })
+      );
   }
 
   addStudent(student: Student): Observable<Student | unknown> {
