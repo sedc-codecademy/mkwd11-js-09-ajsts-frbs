@@ -1,0 +1,43 @@
+.details-heading {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+}
+
+.item-rating {
+  font-size: 35px;
+}
+
+.details-info {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 30px;
+}
+
+.details-footer {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+
+  em {
+    font-size: 26px;
+  }
+
+  button {
+    font-size: 24px;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+    height: 75px;
+
+    &:hover {
+      background-color: rgb(77, 168, 205);
+    }
+  }
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}

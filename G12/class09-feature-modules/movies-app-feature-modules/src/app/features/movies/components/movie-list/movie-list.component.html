@@ -1,0 +1,12 @@
+<section class="container">
+  <div>
+    <h1>Reviews</h1>
+  </div>
+  <div class="list-content">
+    <ul *ngIf="moviesSubject$ | async as movies">
+      <li *ngFor="let movie of movies" (click)="goToMovieDetails(movie.id)">
+        <app-movie-item [movie]="movie"></app-movie-item>
+      </li>
+    </ul>
+  </div>
+</section>
