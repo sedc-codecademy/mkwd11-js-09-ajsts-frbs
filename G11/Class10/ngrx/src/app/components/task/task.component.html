@@ -1,0 +1,28 @@
+<main>
+  <div>
+    <h1>Add new task</h1>
+
+    <label for="taskDescription">Task Description</label>
+    <input
+      type="text"
+      name="taskDescription"
+      id="taskDescription"
+      [(ngModel)]="taskDescription"
+    />
+
+    <button (click)="createTask()">Add Task</button>
+  </div>
+
+  <hr />
+  <h3>Tasks:</h3>
+
+  <ul>
+    <li *ngFor="let task of tasksData">
+      <span [ngStyle]="{ color: task.isDone ? 'green' : 'inherit' }">
+        {{ task.description }}
+      </span>
+      <button>Finish Task</button>
+      <button>Remove Task</button>
+    </li>
+  </ul>
+</main>

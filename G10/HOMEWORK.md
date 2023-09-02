@@ -64,3 +64,7 @@ The main goal of this homework is to go thought all the steps of creating a new 
 
 ## Task 4:
 * Use observables
+
+## Task 5:
+* (optional) Implement NGRX
+* Use Firebase

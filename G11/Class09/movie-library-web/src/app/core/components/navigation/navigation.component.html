@@ -1,0 +1,41 @@
+<header>
+  <div class="title">
+    <h1>{{ title }}</h1>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <div *ngIf="currentUser">
+        <li>
+          <a
+            routerLink="/movies"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Movies</a
+          >
+        </li>
+        <li>
+          <a routerLink="/movies/add-movie" routerLinkActive="active"
+            >Add Movie</a
+          >
+        </li>
+      </div>
+
+      <div *ngIf="!currentUser">
+        <li>
+          <a routerLink="/auth/login">Login</a>
+        </li>
+        <li>
+          <a routerLink="/auth/register">Register</a>
+        </li>
+      </div>
+    </ul>
+  </nav>
+</header>
