@@ -9,6 +9,8 @@ import { TaskComponent } from './components/task/task.component';
 import { ProductsComponent } from './components/products/products.component';
 import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './store/counter/counter.reducer';
+import { FormsModule } from '@angular/forms';
+import { tasksReducer } from './store/task/task.reducer';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,11 @@ import { counterReducer } from './store/counter/counter.reducer';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({
+      // counter and tasks keys, are used as select values in the components
       counter: counterReducer,
+      tasks: tasksReducer,
     }),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
