@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/interfaces/task.interface';
+import { AppState } from 'src/app/store/app.state';
 import { addTask } from 'src/app/store/task/task.actions';
 @Component({
   selector: 'app-task',
@@ -12,7 +13,10 @@ export class TaskComponent implements OnInit {
 
   tasksData: Task[];
   // tasks is the key that we used to "register" the reducer in the app module
-  constructor(private readonly store: Store<{ tasks: { tasks: Task[] } }>) {}
+  constructor(
+    // private readonly store: Store<{ tasks: { tasks: Task[] } }>
+    private readonly store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.store.select('tasks').subscribe((value) => {

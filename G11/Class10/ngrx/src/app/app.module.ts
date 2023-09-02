@@ -11,7 +11,10 @@ import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './store/counter/counter.reducer';
 import { FormsModule } from '@angular/forms';
 import { tasksReducer } from './store/task/task.reducer';
-
+import { appReducer } from './store/app.state';
+import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductsEffects } from './store/products/product.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,12 +26,16 @@ import { tasksReducer } from './store/task/task.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      // counter and tasks keys, are used as select values in the components
-      counter: counterReducer,
-      tasks: tasksReducer,
-    }),
+    // StoreModule.forRoot({
+    //   // counter and tasks keys, are used as select values in the components
+    //   counter: counterReducer,
+    //   tasks: tasksReducer,
+    // }),
+
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([ProductsEffects]),
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
