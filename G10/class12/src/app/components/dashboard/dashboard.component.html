@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="column">
+            <app-top-section [students]="(developmentStudents$ | async) ?? []"
+                [academyName]="'Development'"></app-top-section>
+        </div>
+        <div class="column">
+            <app-top-section [students]="(designStudents$ | async) ?? []" [academyName]="'Design'"></app-top-section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <app-top-section [students]="(qaStudents$ | async) ?? []" [academyName]="'Qa'"></app-top-section>
+        </div>
+        <div class="column">
+            <app-top-section [students]="(devopsStudents$ | async) ?? []" [academyName]="'DevOps'"></app-top-section>
+        </div>
+    </div>
+</div>
