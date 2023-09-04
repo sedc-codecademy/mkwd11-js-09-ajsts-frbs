@@ -1,0 +1,20 @@
+header {
+  nav {
+    border: 1px solid black;
+
+    ul {
+      display: flex;
+      gap: 20px;
+      li {
+        list-style-type: none;
+        padding: 10px;
+        border: 1px solid grey;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.active {
+  background-color: bisque;
+}

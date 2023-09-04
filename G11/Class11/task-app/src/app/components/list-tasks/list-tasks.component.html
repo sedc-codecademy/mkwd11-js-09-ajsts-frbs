@@ -1,0 +1,14 @@
+<main>
+  <div class="taskCard" *ngFor="let task of tasks">
+    <h3>{{ task.description }}</h3>
+    <p>Createon on:{{ task.createdAt | date }}</p>
+    <p>
+      {{ task.isDone ? "Task is finished" : "Task in not finished" }}
+    </p>
+
+    <div>
+      <button>Finish Task</button>
+      <button>Delete Task</button>
+    </div>
+  </div>
+</main>
