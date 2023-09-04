@@ -1,0 +1,24 @@
+.posts-container {
+  padding: 10px;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .post {
+    background-color: blanchedalmond;
+    border-radius: 4px;
+    width: 20%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h4 {
+      margin: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid darkgoldenrod;
+      font-size: 1.2rem;
+    }
+  }
+}

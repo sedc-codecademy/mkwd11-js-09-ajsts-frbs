@@ -1,0 +1,47 @@
+.todos-container {
+  width: 50%;
+  margin: 20px 0px;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0 auto;
+
+  .todo {
+    border: 1.5px solid darkgoldenrod;
+    margin-bottom: 10px;
+    background-color: blanchedalmond;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    button {
+      background-color: white;
+
+      width: fit-content;
+      padding: 5px;
+      border-radius: 4px;
+      border: 2px solid darkgoldenrod;
+      margin: 0;
+      margin-left: 5px;
+      height: fit-content;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: lightgreen;
+      }
+    }
+  }
+
+  .finished {
+    background-color: lightgreen;
+    text-decoration: line-through;
+  }
+}
