@@ -6,14 +6,27 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'students', component: StudentsListComponent },
-  { path: 'students/:id', component: StudentDetailsComponent },
-  { path: 'form', component: StudentFormComponent },
-  { path: 'form/:id', component: StudentFormComponent },
+  {
+    path: 'students',
+    component: StudentsListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'students/:id',
+    component: StudentDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'form', component: StudentFormComponent, canActivate: [AuthGuard] },
+  {
+    path: 'form/:id',
+    component: StudentFormComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: AuthComponent },
   { path: '**', component: NotFoundComponent },
 ];

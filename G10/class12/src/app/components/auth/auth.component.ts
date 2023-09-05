@@ -30,10 +30,18 @@ export class AuthComponent {
 
     const { name, email, password } = this.authForm.value;
 
-    if (!email || !password || !name) {
-      return;
-    }
+    if (this.showLoginForm) {
+      if (!email || !password) {
+        return;
+      }
 
-    this.authService.register(email, password, name);
+      this.authService.login(email, password);
+    } else {
+      if (!email || !password || !name) {
+        return;
+      }
+
+      this.authService.register(email, password, name);
+    }
   }
 }
