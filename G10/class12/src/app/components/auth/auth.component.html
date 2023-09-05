@@ -1,4 +1,28 @@
-<mat-form-field class="example-full-width">
-    <mat-label>Favorite food</mat-label>
-    <input matInput placeholder="Ex. Pizza" value="Sushi">
-</mat-form-field>
+<div class="wrapper">
+    <form>
+        <mat-form-field *ngIf="!showLoginForm">
+            <mat-label>Enter your name</mat-label>
+            <input matInput placeholder="John Doe" type="text">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input matInput placeholder="example@mail.com" type="email">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Enter your password</mat-label>
+            <input [type]="hidePassword ? 'password' : 'text'" matInput />
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' :'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary">
+            {{showLoginForm ? 'Log in' : 'Register'}}
+        </button>
+        <mat-hint>
+            {{showLoginForm ? "Don't have an account?" : 'Already have an account?' }}
+            <a (click)="showLoginForm = !showLoginForm">click here</a></mat-hint>
+    </form>
+</div>
