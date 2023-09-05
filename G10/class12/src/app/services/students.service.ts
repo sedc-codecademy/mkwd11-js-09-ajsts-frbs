@@ -33,8 +33,8 @@ export class StudentsService {
           if (!student.exists) {
             return of(null);
           }
-          // @ts-ignore
-          const grades = student.data()?.grades || [];
+
+          const { grades } = student.data() as Student;
           grades.push(grade);
 
           return from(
