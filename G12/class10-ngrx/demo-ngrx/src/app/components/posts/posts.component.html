@@ -18,7 +18,9 @@
       <label for="body">Body</label>
       <textarea formControlName="body" rows="5" id="body"></textarea>
     </div>
-    <button [disabled]="postForm.invalid" type="submit">ADD</button>
+    <button [disabled]="postForm.invalid" type="submit">
+      {{ isEdit ? "EDIT" : "ADD" }}
+    </button>
   </form>
   <div class="posts-container">
     <div *ngFor="let post of posts$ | async" class="post">
@@ -26,7 +28,7 @@
       <p>
         {{ post.body }}
       </p>
-      <button>Edit</button>
+      <button (click)="onPostEdit(post)">Edit</button>
     </div>
   </div>
 </section>

@@ -2,8 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { omit } from '@ngrx/store/src/utils';
+import { NewPost, Post, UpdatePost } from 'src/app/interfaces/post.interface';
 import { AppState } from 'src/app/store/app.state';
-import { fetchPosts } from 'src/app/store/posts/posts.actions';
+import {
+  addPost,
+  fetchPosts,
+  updatePost,
+} from 'src/app/store/posts/posts.actions';
 import { selectPostList } from 'src/app/store/posts/posts.selector';
 
 @Component({
@@ -17,6 +22,10 @@ export class PostsComponent implements OnInit {
   posts$ = this.store.select(selectPostList);
 
   postForm: FormGroup;
+
+  isEdit = false;
+
+  editPostId: number;
 
   ngOnInit() {
     this.initForm();
@@ -35,7 +44,32 @@ export class PostsComponent implements OnInit {
     if (this.postForm.invalid) return;
 
     // Add a post here
+    const newPost: NewPost = {
+      ...this.postForm.value,
+      userId: 1,
+    };
 
-    // Edit a post here
+    if (!this.isEdit) {
+      this.store.dispatch(addPost({ newPost }));
+    }
+
+    if (this.isEdit) {
+      const updateData: UpdatePost = { ...this.postForm.value };
+
+      this.store.dispatch(updatePost({ updateData, postId: this.editPostId }));
+
+      this.editPostId = null;
+      this.isEdit = false;
+    }
+  }
+
+  onPostEdit(post: Post) {
+    this.isEdit = true;
+    this.editPostId = post.id;
+
+    this.postForm.setValue({
+      title: post.title,
+      body: post.body,
+    });
   }
 }

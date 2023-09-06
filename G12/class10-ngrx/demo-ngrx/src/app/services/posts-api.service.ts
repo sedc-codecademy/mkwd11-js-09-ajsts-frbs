@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Post } from '../interfaces/post.interface';
+import { NewPost, Post, UpdatePost } from '../interfaces/post.interface';
 
 const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -17,6 +17,14 @@ export class PostsApiService {
   }
 
   // 2. Add post
+  createNewPost(newPost: NewPost): Observable<Post> {
+    return this.http.post(POSTS_URL, newPost).pipe(map((data) => data as Post));
+  }
 
   // 3. Update post
+  updatePost(updatePost: UpdatePost, postId: number): Observable<Post> {
+    return this.http
+      .patch(`${POSTS_URL}/${postId}`, updatePost)
+      .pipe(map((data) => data as Post));
+  }
 }
