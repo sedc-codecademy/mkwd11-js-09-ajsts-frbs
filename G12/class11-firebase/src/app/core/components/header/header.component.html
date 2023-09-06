@@ -1,0 +1,39 @@
+<header>
+  <h1>Movies App / HTTP</h1>
+  <strong>Total Likes: {{ totalLikes }}</strong>
+  <nav>
+    <ul>
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <ng-container *ngIf="currentUser">
+        <li>
+          <a
+            routerLink="/movies"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            >Movies</a
+          >
+        </li>
+        <li>
+          <a routerLink="/movies/add" routerLinkActive="active">Add Movie</a>
+        </li>
+        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+        <li (click)="onLogout()">Logout</li>
+      </ng-container>
+      <ng-container *ngIf="!currentUser">
+        <li>
+          <a routerLink="/auth/login" routerLinkActive="active">Login</a>
+        </li>
+        <li>
+          <a routerLink="/auth/register" routerLinkActive="active">Register</a>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+</header>
