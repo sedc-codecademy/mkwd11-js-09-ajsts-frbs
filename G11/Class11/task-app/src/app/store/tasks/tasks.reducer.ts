@@ -4,10 +4,12 @@ import * as TaskActions from './tasks.actions';
 
 export interface TasksState {
   tasks: Task[];
+  isCreating: boolean;
 }
 
 export const initialState: TasksState = {
   tasks: [],
+  isCreating: false,
 };
 
 export const reducer = createReducer(
@@ -19,6 +21,20 @@ export const reducer = createReducer(
       ...state,
       //payload.tasks is acually the tasks props we assigned when we created the action
       tasks: payload.tasks,
+    };
+  }),
+
+  on(TaskActions.createTask, (state) => {
+    return {
+      ...state,
+      isCreating: true,
+    };
+  }),
+
+  on(TaskActions.createTaskSuccess, (state) => {
+    return {
+      ...state,
+      isCreating: false,
     };
   })
 );

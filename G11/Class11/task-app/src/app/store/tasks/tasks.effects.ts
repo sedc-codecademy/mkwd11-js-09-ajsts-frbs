@@ -37,4 +37,37 @@ export class TasksEffects {
       )
     )
   );
+
+  createTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.CREATE_TASK),
+      switchMap(({ description }) =>
+        this.taskService
+          .createTask(description)
+          .pipe(map(() => TaskActions.createTaskSuccess()))
+      )
+    )
+  );
+
+  finishTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.FINISH_TASK),
+      switchMap(({ id }) =>
+        this.taskService
+          .finishTask(id)
+          .pipe(map(() => TaskActions.finishTaskSuccess()))
+      )
+    )
+  );
+
+  deleteTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.DELETE_TASK),
+      switchMap(({ id }) =>
+        this.taskService
+          .removeTask(id)
+          .pipe(map(() => TaskActions.deleteTaskSucess()))
+      )
+    )
+  );
 }
