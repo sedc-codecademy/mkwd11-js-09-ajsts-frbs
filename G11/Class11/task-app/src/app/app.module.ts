@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/app.state';
 import { TasksEffects } from './store/tasks/tasks.effects';
+import { FormsModule } from '@angular/forms';
 
 // It is not good practice to have sensitive data visible
 const firebaseConfig = {
@@ -39,6 +40,7 @@ const firebaseConfig = {
     provideFirestore(() => getFirestore()),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([TasksEffects]),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,7 +3,11 @@ import { Store } from '@ngrx/store';
 import { Task } from 'src/app/interfaces/task.interface';
 import { TaskService } from 'src/app/services/task.service';
 import { AppState } from 'src/app/store/app.state';
-import { fetchTasks } from 'src/app/store/tasks/tasks.actions';
+import {
+  deleteTask,
+  fetchTasks,
+  finishTask,
+} from 'src/app/store/tasks/tasks.actions';
 import { selectTasks } from 'src/app/store/tasks/tasks.selectors';
 
 @Component({
@@ -29,4 +33,12 @@ export class ListTasksComponent implements OnInit {
       this.tasks = tasksFromStore;
     });
   }
+
+  deleteTask = (taskId: string) => {
+    this.store.dispatch(deleteTask({ id: taskId }));
+  };
+
+  finishTask = (taskId: string) => {
+    this.store.dispatch(finishTask({ id: taskId }));
+  };
 }
