@@ -1,6 +1,9 @@
+import { Observable } from 'rxjs';
+import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from '../../services/notifications.service';
 import { NotificationMessage } from 'src/app/interfaces/notification-message.interface';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -9,19 +12,24 @@ import { NotificationMessage } from 'src/app/interfaces/notification-message.int
 })
 export class NavbarComponent implements OnInit {
   notification: NotificationMessage | null = null;
+  isLoggedIn$: Observable<boolean> = new Observable<boolean>();
+  userData$: Observable<User | null> = new Observable<User | null>();
 
-  constructor(private notificationsService: NotificationsService) {}
+  constructor(
+    private notificationsService: NotificationsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    // let count = 1;
-    // setInterval(() => {
-    //   this.notificationsService.pushNotification(`sega e ${count}`, 'error');
-    //   count++;
-    // }, 7000);
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.userData$ = this.authService.userData$;
 
     this.notificationsService.notification$.subscribe((notification) => {
-      console.log(notification);
       this.notification = notification;
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -9,8 +9,12 @@
         <li>
             <a routerLink="/form" routerLinkActive="active">Form</a>
         </li>
-        <li>
+        <li *ngIf="!(isLoggedIn$ | async)">
             <a routerLink="/login" routerLinkActive="active">Log in</a>
+        </li>
+        <li *ngIf="isLoggedIn$ | async">
+            <span>Hi, {{(userData$ | async)?.name}}</span>
+            <button (click)="logout()">Log out</button>
         </li>
     </ul>
 
@@ -23,3 +27,7 @@
         </p>
     </div>
 </nav>
+
+<pre>
+    {{userData$ | async | json}}
+</pre>

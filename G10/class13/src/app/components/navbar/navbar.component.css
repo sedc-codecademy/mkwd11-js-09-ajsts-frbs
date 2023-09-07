@@ -52,3 +52,13 @@ a:hover {
 .success {
     background-color: lightgreen;
 }
+
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 5px;
+}
