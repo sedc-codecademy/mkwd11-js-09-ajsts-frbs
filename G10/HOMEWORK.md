@@ -35,10 +35,10 @@ The main goal of this homework is to go thought all the steps of creating a new 
 
 ## Task 2:
 1. Create a new component called `hotel-details`.
-2. Add a link on the name of the hotel, in the list from the previous task, that will navigate to the `hotel-details` component and show info about the hotel.
+2. Add a link to the name of the hotel, in the list from the previous task, that will navigate to the `hotel-details` component and show info about the hotel.
 3. On the details page showcase the list of rooms that the hotel has. The list should contain the following information about each room: name, description, image, price, persons, children, currency, amenities, and availability. The list should be displayed in a table or any elements you see fit (you are free to design this as you wish).
 4. Create a directive to highlight the rooms that are available (in any way you want by changing some style property).
-* the hotel details page can be created on a new route or on the same route as the list of hotels (routing is optional).
+* The hotel details page can be created on a new route or on the same route as the list of hotels (routing is optional).
 
 ## Task 3:
 1. Implement ability to add, update and delete hotels and rooms. Implement forms for the following actions: (use reactive forms, the structure and design is up to you)
@@ -68,3 +68,9 @@ The main goal of this homework is to go thought all the steps of creating a new 
 ## Task 5:
 * (optional) Implement NGRX
 * Use Firebase
+
+
+## Task 6:
+* Implement Authentication
+* Users should be able to register and login to the app
+* Add admin role. Admin users are the only ones who can add and edit hotels & hotel rooms
