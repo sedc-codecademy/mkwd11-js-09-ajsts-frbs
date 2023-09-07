@@ -100,6 +100,7 @@ export class AuthService {
           uid: result.user?.uid,
           email,
           name,
+          roles: {},
         } satisfies User;
 
         await this.setUserData(userData);

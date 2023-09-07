@@ -7,6 +7,8 @@ import { StudentDetailsComponent } from './components/student-details/student-de
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { EditorGuard } from './guards/editor.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -14,18 +16,22 @@ const routes: Routes = [
   {
     path: 'students',
     component: StudentsListComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, EditorGuard],
   },
   {
     path: 'students/:id',
     component: StudentDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, EditorGuard],
   },
-  { path: 'form', component: StudentFormComponent, canActivate: [AuthGuard] },
+  {
+    path: 'form',
+    component: StudentFormComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
   {
     path: 'form/:id',
     component: StudentFormComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   { path: 'login', component: AuthComponent },
   { path: '**', component: NotFoundComponent },
