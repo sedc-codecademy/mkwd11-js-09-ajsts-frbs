@@ -28,3 +28,4 @@ If when adding `ng add @angular/fire` you get prompted for an auth key follow th
 - Install the global firebase-tools package by using `npm i -g firebase-tools`
 - Run the `firebase login` command in the terminal and follow the redirect steps to login with your google account
 - Rerun `ng add @angular/fire` and follow all the steps to setup your project to use firebase
+- If you get the index.ts error just replace the invalid type with any and it will work properly
