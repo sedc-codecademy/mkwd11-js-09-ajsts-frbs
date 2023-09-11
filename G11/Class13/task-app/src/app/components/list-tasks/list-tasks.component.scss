@@ -1,0 +1,27 @@
+h2 {
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.taskCard {
+  width: 350px;
+  border: 2px solid lightgrey;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.taskCard:hover {
+  box-shadow: 2px 4px 8px darkblue;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
