@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatSelectModule } from '@angular/material/select';
 
 const modules = [
   BrowserAnimationsModule,
@@ -16,7 +19,10 @@ const modules = [
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
 ]
 
 @NgModule({

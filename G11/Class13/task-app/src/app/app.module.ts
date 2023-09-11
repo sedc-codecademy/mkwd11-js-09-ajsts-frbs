@@ -13,8 +13,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/app.state';
 import { TasksEffects } from './store/tasks/tasks.effects';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 // It is not good practice to have sensitive data visible
@@ -34,6 +36,8 @@ const firebaseConfig = {
     NavigationComponent,
     CreateTaskComponent,
     ListTasksComponent,
+    RegisterComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,7 @@ const firebaseConfig = {
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([TasksEffects]),
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   providers: [],

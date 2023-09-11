@@ -1,0 +1,50 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Email: </mat-label>
+    <input matInput formControlName="email" />
+    <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+      The email is required!
+    </mat-error>
+    <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+      The email is invalid!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password: </mat-label>
+    <input matInput formControlName="password" />
+    <mat-error *ngIf="registerForm.get('password')?.hasError('required')"
+      >The password is required</mat-error
+    >
+    <mat-error *ngIf="registerForm.get('password')?.hasError('minLength')"
+      >The password is is not valid</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date of birth</mat-label>
+    <input
+      formControlName="dateOfBirth"
+      matInput
+      [matDatepicker]="datePicker"
+      placeholder="Select your date of birth"
+    />
+    <mat-datepicker-toggle
+      matTextSuffix
+      [for]="datePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Gender</mat-label>
+    <mat-select formControlName="gender" placeholder="Select your gender">
+      <mat-option value="male">Male</mat-option>
+      <mat-option value="female">Female</mat-option>
+      <mat-option value="other">Other</mat-option>
+    </mat-select>
+    <mat-error *ngIf="registerForm.get('gender')?.hasError('required')">
+      The gender is required!
+    </mat-error>
+  </mat-form-field>
+</form>
