@@ -20,3 +20,11 @@
 - Reference the code that we have typed on class so far if you get stuck
 - Go step by step
 - The final website should not have full css implementation as that is not the main focus of this workshop rather the focus should be on writing and practicing angular and then connecting that with a proper firebase project using angular fire.
+
+## Firebase troubleshooting guide
+
+If when adding `ng add @angular/fire` you get prompted for an auth key follow these steps to login
+
+- Install the global firebase-tools package by using `npm i -g firebase-tools`
+- Run the `firebase login` command in the terminal and follow the redirect steps to login with your google account
+- Rerun `ng add @angular/fire` and follow all the steps to setup your project to use firebase
