@@ -9,6 +9,9 @@
         <li>
             <a routerLink="/form" routerLinkActive="active">Form</a>
         </li>
+        <li>
+            <a routerLink="admin-settings" routerLinkActive="active">Admin Settings</a>
+        </li>
         <li *ngIf="!(isLoggedIn$ | async)">
             <a routerLink="/login" routerLinkActive="active">Log in</a>
         </li>

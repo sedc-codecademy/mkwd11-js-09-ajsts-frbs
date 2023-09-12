@@ -21,7 +21,7 @@ export class AdminGuard {
     return this.authService.userData$.pipe(
       take(1),
       map((user) => !!user?.roles?.['admin']),
-      tap((isAdmin) => !isAdmin && this.router.navigate(['/dashboard']))
+      tap((isAdmin) => !isAdmin && this.router.navigate(['/not-allowed']))
     );
   }
 }

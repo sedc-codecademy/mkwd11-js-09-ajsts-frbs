@@ -13,7 +13,7 @@ export class EditorGuard {
     return this.authService.userData$.pipe(
       take(1),
       map((user) => !!user?.roles?.['editor']),
-      tap((isEditor) => !isEditor && this.router.navigate(['/dashboard']))
+      tap((isEditor) => !isEditor && this.router.navigate(['/not-allowed']))
     );
   }
 }

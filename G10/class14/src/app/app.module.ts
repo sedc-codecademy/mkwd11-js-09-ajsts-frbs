@@ -32,6 +32,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AuthModule } from './components/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotAllowedComponent } from './components/not-allowed/not-allowed.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AddGradesComponent,
     StudentFormComponent,
     RequiredFieldDirective,
+    NotAllowedComponent,
   ],
   imports: [
     BrowserModule,
