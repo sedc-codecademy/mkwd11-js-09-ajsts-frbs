@@ -1,0 +1,14 @@
+.wrapper {
+    /* border: 1px solid black; */
+}
+
+.row {
+    /* border: 1px solid red; */
+    display: flex;
+}
+
+.column {
+    /* border: 1px solid blue; */
+    padding: 10px;
+    width: 100%;
+}
