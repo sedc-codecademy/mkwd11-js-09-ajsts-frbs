@@ -10,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { User } from 'src/app/interfaces/user.interface';
+import { Roles, User } from 'src/app/interfaces/user.interface';
 import {
   Observable,
   Subject,
@@ -65,6 +65,16 @@ export class AdminSettingsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.userRoleForm.value);
+    if (!this.userRoleForm.value.user?.uid) {
+      return;
+    }
+
+    const id = this.userRoleForm.value.user.uid;
+    const roles: Roles = {
+      admin: !!this.userRoleForm.value.admin,
+      editor: !!this.userRoleForm.value.editor,
+    };
+
+    this.userService.updateUserRoles(id, roles);
   }
 }
