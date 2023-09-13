@@ -1,0 +1,64 @@
+nav {
+    background-color: darkgray;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+}
+
+li {
+    padding: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+a:hover {
+    color: blue;
+}
+
+.active {
+    color: lightblue
+}
+
+.notification {
+    width: 250px;
+    height: 100%;
+    border: none;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.error {
+    background-color: lightsalmon;
+}
+
+.success {
+    background-color: lightgreen;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 5px;
+}

@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <form [formGroup]="userRoleForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Users</mat-label>
+            <input type="text" placeholder="Select user" matInput [matAutocomplete]="auto" formControlName="user"
+                (input)="search($event)">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let user of users$ | async" [value]="user">
+                    {{user.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <section>
+            <h4>Select roles:</h4>
+            <p>
+                <mat-checkbox formControlName="admin">Admin</mat-checkbox>
+            </p>
+            <p>
+                <mat-checkbox formControlName="editor">Editor</mat-checkbox>
+            </p>
+        </section>
+
+        <button [disabled]="userRoleForm.invalid" type="submit" mat-raised-button color="primary">Save</button>
+    </form>
+</div>
