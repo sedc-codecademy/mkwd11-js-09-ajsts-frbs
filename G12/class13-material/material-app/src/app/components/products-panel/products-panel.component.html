@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Products Info </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h3>Total Products: {{ productsLength }}</h3>
+    <h3>Avg Price: {{ avgPrice }}</h3>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Product List </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let product of products">
+        {{ product.title }}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

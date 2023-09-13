@@ -1,0 +1,64 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Register</mat-card-title>
+    <mat-card-subtitle>Register a new user</mat-card-subtitle>
+  </mat-card-header>
+  <form [formGroup]="registerForm">
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="text"
+          placeholder="ex john@doe.com"
+        />
+        <mat-error *ngIf="registerForm.controls.email.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls.email.hasError('email')">
+          Please enter a valid email
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+        <mat-error *ngIf="registerForm.controls.password.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">
+          Password must be at least 8 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Pricing Tier</mat-label>
+        <mat-select formControlName="pricingTier">
+          <mat-option *ngFor="let tier of pricingTiers" [value]="tier">
+            {{ tier | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <mat-radio-group formControlName="gender">
+          <mat-radio-button value="male">Male </mat-radio-button>
+          <mat-radio-button value="female">Female </mat-radio-button>
+        </mat-radio-group>
+        <mat-checkbox formControlName="subscribed"
+          >Subscribe to newsletter</mat-checkbox
+        >
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

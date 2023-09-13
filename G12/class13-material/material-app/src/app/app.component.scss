@@ -1,0 +1,4 @@
+mat-toolbar {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, max-content);
+}
