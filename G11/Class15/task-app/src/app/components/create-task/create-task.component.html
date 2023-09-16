@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>Create Task</h2>
+
+  <mat-form-field>
+    <label for="taskName">Enter task description:</label>
+    <input
+      matInput
+      type="text"
+      name="taskName"
+      id="taskName"
+      placeholder="Description..."
+      [(ngModel)]="description"
+    />
+
+    <button
+      mat-raised-button
+      color="primary"
+      matTooltip="Click here to create the task"
+      matTooltipShowDelay="500"
+      matTooltipHideDelay="300"
+      [disabled]="isCreating"
+      (click)="createTask()"
+    >
+      Create Task
+    </button>
+  </mat-form-field>
+</div>

@@ -1,0 +1,3 @@
+# TaskApp
+
+- Added firebase authentication
