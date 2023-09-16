@@ -9,7 +9,7 @@
       {{ task.isDone ? "Task is finished" : "Task in not finished" }}
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions *ngIf="isAuth">
       <button 
       mat-stroked-button 
       color="primary"

@@ -8,8 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const modules = [
   BrowserAnimationsModule,
@@ -22,12 +23,13 @@ const modules = [
   MatTooltipModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
-]
+  MatSelectModule,
+  MatProgressBarModule,
+];
 
 @NgModule({
   declarations: [],
   imports: modules,
-  exports: modules
+  exports: modules,
 })
-export class MaterialModule { }
+export class MaterialModule {}

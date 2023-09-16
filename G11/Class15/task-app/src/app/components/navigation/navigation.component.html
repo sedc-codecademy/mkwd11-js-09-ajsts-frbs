@@ -1,38 +1,58 @@
 <mat-toolbar color="primary">
   <span>Tasks App</span>
   <nav mat-tab-nav-bar>
-    <a mat-tab-link
-       routerLink="/"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{ exact: true }">
+    <a
+      mat-tab-link
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       Home
     </a>
-    <a mat-tab-link
-    [matBadge]="numberOfTasks"
-       routerLink="/tasks"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{ exact: true }">
+    <a
+      mat-tab-link
+      [matBadge]="numberOfTasks"
+      routerLink="/tasks"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       Tasks
     </a>
-    <a mat-tab-link
-       routerLink="/create-task"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{ exact: true }">
+    <a
+      mat-tab-link
+      routerLink="/create-task"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       Create Task
     </a>
-    <a mat-tab-link
-       routerLink="/register"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{ exact: true }">
+    <a
+    *ngIf="!isAuth"
+      mat-tab-link
+      routerLink="/register"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       Register
     </a>
-    <a mat-tab-link
-    routerLink="/login"
+    <a
+    *ngIf="!isAuth"
+      mat-tab-link
+      routerLink="/login"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Login
+    </a>
+    <a
+    *ngIf="isAuth"
+    mat-tab-link
     routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }">
-   Login
- </a>
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="logout()"
+  >
+    Logout
+  </a>
 
   </nav>
 </mat-toolbar>
-

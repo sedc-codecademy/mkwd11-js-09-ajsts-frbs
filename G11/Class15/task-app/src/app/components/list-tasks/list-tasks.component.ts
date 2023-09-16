@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Task } from 'src/app/interfaces/task.interface';
 import { TaskService } from 'src/app/services/task.service';
 import { AppState } from 'src/app/store/app.state';
+import { selectIsAuthenticated } from 'src/app/store/auth/auth.selectors';
 import {
   deleteTask,
   fetchTasks,
@@ -22,6 +23,7 @@ export class ListTasksComponent implements OnInit {
   ) {}
 
   tasks: Task[];
+  isAuth: boolean;
 
   ngOnInit(): void {
     // for demo purpose to see data structore of firestore collection
@@ -31,6 +33,10 @@ export class ListTasksComponent implements OnInit {
 
     this.store.select(selectTasks).subscribe((tasksFromStore) => {
       this.tasks = tasksFromStore;
+    });
+
+    this.store.select(selectIsAuthenticated).subscribe((isAuthenticated) => {
+      this.isAuth = isAuthenticated;
     });
   }
 
