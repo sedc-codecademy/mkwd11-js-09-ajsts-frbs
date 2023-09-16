@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthenticationModule } from './components/auth/auth.module';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { AuthEffects } from './store/auth/auth.effects';
 
 // It is not good practice to have sensitive data visible
 
@@ -39,7 +40,7 @@ import { environment } from 'src/environments/environment';
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([TasksEffects]),
+    EffectsModule.forRoot([TasksEffects, AuthEffects]),
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,

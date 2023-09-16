@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { registerUser } from 'src/app/store/auth/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -8,6 +11,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+
+  constructor(private readonly store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -26,6 +31,9 @@ export class RegisterComponent implements OnInit {
   };
 
   onSubmit = (): void => {
-    console.log(this.registerForm);
+    const email: string = this.registerForm.get('email')?.value;
+    const password: string = this.registerForm.get('password')?.value;
+
+    this.store.dispatch(registerUser({ email: email, password: password }));
   };
 }
