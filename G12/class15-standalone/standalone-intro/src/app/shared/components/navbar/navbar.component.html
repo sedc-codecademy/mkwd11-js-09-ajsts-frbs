@@ -1,0 +1,16 @@
+<nav>
+  <div
+    *ngFor="let link of (currentUser$ | async) ? moviesNavLinks : authNavLinks"
+  >
+    <a
+      [routerLink]="link.url"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      {{ link.text }}
+    </a>
+  </div>
+  <div *ngIf="currentUser$ | async">
+    <a (click)="onLogout()"> Logout </a>
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+<form [formGroup]="movieForm" (ngSubmit)="onFormSubmit()">
+  <div class="form-group">
+    <label>Title</label>
+    <input class="form-input" type="text" formControlName="title" />
+  </div>
+  <div class="form-group">
+    <label>Year</label>
+    <input class="form-input" type="number" formControlName="year" />
+  </div>
+  <div class="form-group">
+    <label>Director</label>
+    <input class="form-input" type="text" formControlName="director" />
+  </div>
+  <div class="form-group">
+    <label>Genres</label>
+    <input class="form-input" type="text" formControlName="genres" />
+  </div>
+  <div class="form-group">
+    <label>Review</label>
+    <textarea
+      class="form-input"
+      type="text"
+      rows="5"
+      formControlName="text"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label>Rating</label>
+    <div class="radio-container">
+      <div *ngFor="let number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+        <input
+          type="radio"
+          name="rating"
+          formControlName="rating"
+          [value]="number"
+          class="radio"
+          [id]="'rating-radio-' + number"
+          [attr.number]="number"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Author</label>
+    <input class="form-input" type="text" formControlName="author" />
+  </div>
+  <div>
+    <button type="submit" [disabled]="movieForm.invalid" class="btn">
+      {{ isEdit ? "UPDATE MOVIE" : "ADD MOVIE" }}
+    </button>
+    <button
+      type="button"
+      (click)="onFormReset()"
+      [disabled]="!movieForm.dirty"
+      class="btn"
+    >
+      RESET
+    </button>
+  </div>
+</form>
